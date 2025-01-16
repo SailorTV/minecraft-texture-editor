@@ -81,6 +81,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const zip = new JSZip();
         console.log('Démarrage du téléchargement des images...');
 
+        // Ajouter les fichiers pack.mcmeta et pack.png à la racine
+        const packMeta = {
+            "pack": {
+                "pack_format": 6,
+                "description": "Mon pack de textures personnalisé"
+            }
+        };
+        zip.file("pack.mcmeta", JSON.stringify(packMeta, null, 2));
+
+        // Charger pack.png depuis le dossier textures
+        const packPngBlob = await fetch('textures/pack.png').then(res => res.blob());
+        zip.file("pack.png", packPngBlob);
+
         // Pour chaque URL de texture sélectionnée
         for (let i = 0; i < urls.length; i++) {
             const imageUrl = urls[i];
@@ -95,10 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (imageBlob) {
                 console.log(`Ajout de l'image ${imageUrl} au ZIP`);
                 console.log(imageBlob); // Log the imageBlob to debug the issue
-                // Ajouter l'image dans le ZIP avec le nom du dossier d'origine
-                const resolution = imageUrl.split('/')[1]; // Extraire la résolution de l'URL
-                const folderName = textureType; // Utiliser le nom du dossier d'origine
-                const filePath = `${folderName}/${folderName}.png`;
+                // Ajouter l'image dans le ZIP avec le chemin spécifié
+                const filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 console.log(`Chemin d'accès du fichier ajouté au ZIP : ${filePath}`);
                 zip.file(filePath, imageBlob, { binary: true });
             } else {
@@ -117,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const zipBlob = await zip.generateAsync({ type: 'blob' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(zipBlob);
-        link.download = 'textures_pack.zip';
+        link.download = 'Nom_du_Pack.zip';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
