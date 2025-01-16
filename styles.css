@@ -1,0 +1,197 @@
+/* Réinitialisation des styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #2a1b4f;
+    color: white;
+    text-align: center;
+}
+
+/* Styles du header */
+header {
+    background-color: #2a1b4f;
+    color: white;
+    padding: 40px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0 30px;
+}
+
+/* Style des liens dans le menu */
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 0px;
+    display: inline-block;
+    position: relative;
+    border-radius: 20px;
+    color: white;
+}
+
+/* Effet de soulignement au survol */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffb300;
+    transition: width 0.4s ease-in-out;
+    border-radius: 20px;
+}
+
+/* Survol : étend le soulignement */
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Style général des sections */
+main {
+    padding: 20px;
+    background-color: #2a1b4f;
+}
+
+/* Style des boutons */
+button {
+    background-color: #fba700db;
+    color: white;
+    border-color:#fba700db ;
+    border-width: 5px;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+button:hover {
+    background-color: #f05d01;
+    border-color:#f05d01;
+}
+
+/* Options de résolution */
+.option {
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 5px;
+    display: inline-block;
+}
+
+.option img {
+    width: 200px;
+    height: 200px;
+    border: 5px solid transparent;
+    border-radius: 10px;
+    margin: 15px;
+    transition: border 0.3s ease;
+    image-rendering: pixelated;
+}
+
+.option img:hover {
+    border: 5px solid #ffb300;
+    border-style: outset;
+    border-radius: 10px;
+}
+
+/* Galerie des textures */
+#texturesGallery {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+#texturesGallery img {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    transition: border 0.3s ease;
+    image-rendering: pixelated;
+}
+
+#texturesGallery img:hover {
+    border: 5px solid #ffb300;
+    border-style: outset;
+    border-radius: 10px;
+}
+
+#texturesGallery img.selected {
+    border: 2px solid #45a049;
+}
+
+/* Footer */
+footer {
+    background-color: #2a1b4f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+}
+
+footer a {
+    color: #ffb300;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+#step3 {
+    padding: 20px;
+}
+
+#downloadButton {
+    background-color: #fba700db;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#downloadButton:hover {
+    background-color: #f05d01;
+}
+
+#step2,
+#step3,
+#finalStep {
+    display: none;
+}
+
+h1, h2, p {
+    font-size: 1.2em;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}

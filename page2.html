@@ -1,0 +1,78 @@
+    <!DOCTYPE html>
+    <html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Personnalisation du pack</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="page1.html">Information</a></li>
+                    <li><a href="page2.html">Créer ton pack</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h1>Personnalisation de votre textures pack</h1>
+            <br>
+            <br>
+            <br>
+            
+            <!-- Étape 1 : Sondage avec question et images -->
+            <section id="step1">
+                <h2>Étape 1 : Choisissez votre résolution en pixels</h2>
+                <p><em>🛈 Note: Choisissez une résolution basse pour plus d'Fps sur le jeu</em></p>
+                <div id="e1">
+                    <div class="option" data-resolution="8x8">
+                        <img src="textures/8x8/8x8.png" alt="8x8">
+                        <p>8x8</p>
+                    </div>
+                    <div class="option" data-resolution="16x16">
+                        <img src="textures/16x16/16x16.png" alt="16x16">
+                        <p>16x16</p>
+                    </div>
+                    <div class="option" data-resolution="32x32">
+                        <img src="textures/32x32/32x32.png" alt="32x32">
+                        <p>32x32</p>
+                    </div>
+                    <div class="option" data-resolution="64x64">
+                        <img src="textures/64x64/64x64.png" alt="64x64">
+                        <p>64x64</p>
+                    </div>
+                    <div class="option" data-resolution="128x128">
+                        <img src="textures/128x128/128x128.png" alt="128x128">
+                        <p>128x128 et +</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Étape 2 : Choix des textures après sélection de la résolution -->
+            <section id="step2" style="display: none;">
+                <h2>Étape 2 : Sélectionnez vos textures</h2>
+                <!-- Galerie d'images -->
+                <div id="texturesGallery"></div>
+            </section>
+
+             <!-- Étape 3 : -->
+            <section id="step3" style="display: none;">
+                <h2>Étape 3 : Téléchargez votre pack de textures</h2>
+                <button id="downloadButton">Télécharger mon pack</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>SailorTV &copy; Tous droits réservés | <a href="page1.html">Contact</a></p>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>
