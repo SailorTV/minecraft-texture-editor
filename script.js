@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Pour chaque URL de texture sélectionnée
         for (let i = 0; i < urls.length; i++) {
             const imageUrl = urls[i];
+            const textureType = Object.keys(selectedTextures)[i]; // Obtenir le type de texture correspondant
 
             // Afficher l'URL pour vérifier
             console.log(`Téléchargement de l'image : ${imageUrl}`);
@@ -93,11 +94,23 @@ document.addEventListener('DOMContentLoaded', function () {
             
             if (imageBlob) {
                 console.log(`Ajout de l'image ${imageUrl} au ZIP`);
-                // Ajouter l'image dans le ZIP
-                zip.file(`textures/image${i + 1}.png`, imageBlob, { binary: true });
+                console.log(imageBlob); // Log the imageBlob to debug the issue
+                // Ajouter l'image dans le ZIP avec le nom du dossier d'origine
+                const resolution = imageUrl.split('/')[1]; // Extraire la résolution de l'URL
+                const folderName = textureType; // Utiliser le nom du dossier d'origine
+                const filePath = `${folderName}/${folderName}.png`;
+                console.log(`Chemin d'accès du fichier ajouté au ZIP : ${filePath}`);
+                zip.file(filePath, imageBlob, { binary: true });
             } else {
                 console.error(`Erreur avec l'image ${imageUrl}`);
             }
+        }
+
+        // Vérifier si des fichiers ont été ajoutés au ZIP
+        console.log('Fichiers ajoutés au ZIP:', Object.keys(zip.files));
+        if (Object.keys(zip.files).length === 0) {
+            alert('Erreur : Aucun fichier n\'a été ajouté au ZIP.');
+            return;
         }
 
         // Générer le fichier ZIP
@@ -115,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const response = await fetch(imageUrl);
             if (!response.ok) throw new Error(`Erreur de téléchargement: ${imageUrl}`);
+            console.log(`Image téléchargée avec succès: ${imageUrl}`);
             return await response.blob();
         } catch (error) {
             console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
