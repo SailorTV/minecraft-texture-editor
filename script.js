@@ -71,20 +71,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Demander le nom du pack de textures
-        const packName = prompt('Entrez le nom de votre pack de textures :');
-        if (!packName) {
-            alert('Erreur : Nom du pack invalide.');
-            return;
-        }
-
         // Récupérer les URLs des textures sélectionnées
         const urls = Object.values(selectedTextures);
-        downloadZips(urls, packName);
+        downloadZips(urls);
     });
 
     // Fonction pour créer un fichier ZIP avec images en base64
-    async function downloadZips(urls, packName) {
+    async function downloadZips(urls) {
         const zip = new JSZip();
         console.log('Démarrage du téléchargement des images...');
 
@@ -135,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const zipBlob = await zip.generateAsync({ type: 'blob' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(zipBlob);
-        link.download = `${packName}.zip`;
+        link.download = 'Nom_du_Pack.zip';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
