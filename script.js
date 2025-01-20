@@ -176,7 +176,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'paladium_bow') {
                     const folderPath = `textures/${resolution}/${textureType}${i}/`;
                     const response = await fetch(folderPath);
-                    const files = await response.json();
+                    const text = await response.text();
+                    const files = JSON.parse(text);
                     for (const file of files) {
                         const fileBlob = await fetchImage(`${folderPath}${file}`);
                         const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
@@ -194,7 +195,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'potion_launcher') {
                     const folderPath = `textures/${resolution}/${textureType}${i}/`;
                     const response = await fetch(folderPath);
-                    const files = await response.json();
+                    const text = await response.text();
+                    const files = JSON.parse(text);
                     for (const file of files) {
                         const fileBlob = await fetchImage(`${folderPath}${file}`);
                         const filePath = `assets/palamod/textures/items/weapons/${file}`;
