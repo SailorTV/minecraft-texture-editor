@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const step3Section = document.getElementById('step3');
     const imageGallery = document.getElementById('texturesGallery');
     const downloadButton = document.getElementById('downloadButton');
+    const packNameModal = document.getElementById('packNameModal');
+    const packNameInput = document.getElementById('packNameInput');
+    const confirmPackNameButton = document.getElementById('confirmPackNameButton');
+    const closeModal = document.querySelector('.modal .close');
+    let packName = '';
     const textureSequence = ['diamond_sword', 'ender_pearl']; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -71,12 +76,23 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Demander le nom du pack de textures
-        const packName = prompt('Entrez le nom de votre pack de textures :');
+        // Afficher le modal pour entrer le nom du pack
+        packNameModal.style.display = 'block';
+    });
+
+    // Fermer le modal
+    closeModal.addEventListener('click', function () {
+        packNameModal.style.display = 'none';
+    });
+
+    // Confirmer le nom du pack
+    confirmPackNameButton.addEventListener('click', function () {
+        packName = packNameInput.value.trim();
         if (!packName) {
             alert('Erreur : Nom du pack invalide.');
             return;
         }
+        packNameModal.style.display = 'none';
 
         // Récupérer les URLs des textures sélectionnées
         const urls = Object.values(selectedTextures);
