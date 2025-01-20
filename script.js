@@ -177,11 +177,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'paladium_bow') {
                     const folderPath = `textures/${selectedResolution}/${textureType}${i}/`;
                     const response = await fetch(folderPath);
-                    const files = await response.json();
-                    for (const file of files) {
-                        const fileBlob = await fetchImage(`${folderPath}${file}`);
-                        const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
-                        zip.file(filePath, fileBlob, { binary: true });
+                    if (response.ok) {
+                        const files = await response.json();
+                        for (const file of files) {
+                            const fileBlob = await fetchImage(`${folderPath}${file}`);
+                            const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        }
+                    } else {
+                        console.error(`Erreur de téléchargement pour le dossier ${folderPath}`);
                     }
                 } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
@@ -195,11 +199,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'potion_launcher') {
                     const folderPath = `textures/${selectedResolution}/${textureType}${index}/`;
                     const response = await fetch(folderPath);
-                    const files = await response.json();
-                    for (const file of files) {
-                        const fileBlob = await fetchImage(`${folderPath}${file}`);
-                        const filePath = `assets/palamod/textures/items/weapons/${file}`;
-                        zip.file(filePath, fileBlob, { binary: true });
+                    if (response.ok) {
+                        const files = await response.json();
+                        for (const file of files) {
+                            const fileBlob = await fetchImage(`${folderPath}${file}`);
+                            const filePath = `assets/palamod/textures/items/weapons/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        }
+                    } else {
+                        console.error(`Erreur de téléchargement pour le dossier ${folderPath}`);
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
