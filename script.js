@@ -33,69 +33,39 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Fonction pour charger la galerie d'images
-    async function loadImageGallery(resolution, textureType) {
+    function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        try {
-            // Fetch the list of images dynamically
-            const response = await fetch(`textures/${resolution}/${textureType}/`);
-            if (!response.ok) throw new Error(`Erreur lors de la récupération des images: ${response.statusText}`);
-            
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                throw new Error('Réponse inattendue du serveur, JSON attendu.');
-            }
+        for (let i = 1; i <= 5; i++) {
+            const img = document.createElement('img');
+            img.src = `textures/${resolution}/${textureType}/image${i}.png`;
+            img.alt = `${textureType} Image ${i}`;
+            img.classList.add('image-option');
 
-            const images = await response.json(); // Assuming the server returns a JSON array of image filenames
+            // Ajouter un événement de clic pour sélectionner une texture
+            img.addEventListener('click', function () {
+                if (selectedTexture) {
+                    selectedTexture.classList.remove('selected');
+                }
 
-            if (images.length === 0) {
-                const noImagesMessage = document.createElement('p');
-                noImagesMessage.textContent = 'Aucune image trouvée pour cette résolution.';
-                imageGallery.appendChild(noImagesMessage);
-                return;
-            }
+                img.classList.add('selected');
+                selectedTexture = img;
 
-            // Afficher le nombre d'images disponibles
-            const imageCount = document.createElement('p');
-            imageCount.textContent = `Nombre d'images disponibles : ${images.length}`;
-            imageGallery.appendChild(imageCount);
+                // Enregistrer la texture sélectionnée
+                selectedTextures[textureType] = img.src;
 
-            images.forEach((image, index) => {
-                const img = document.createElement('img');
-                img.src = `textures/${resolution}/${textureType}/${image}`;
-                img.alt = `${textureType} Image ${index + 1}`;
-                img.classList.add('image-option');
-
-                // Ajouter un événement de clic pour sélectionner une texture
-                img.addEventListener('click', function () {
-                    if (selectedTexture) {
-                        selectedTexture.classList.remove('selected');
-                    }
-
-                    img.classList.add('selected');
-                    selectedTexture = img;
-
-                    // Enregistrer la texture sélectionnée
-                    selectedTextures[textureType] = img.src;
-
-                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                    if (currentTextureIndex < textureSequence.length - 1) {
-                        currentTextureIndex++; // Incrémenter l'index
-                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                    } else {
-                        step2Section.style.display = 'none';
-                        step3Section.style.display = 'block';
-                    }
-                });
-
-                imageGallery.appendChild(img);
+                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                if (currentTextureIndex < textureSequence.length - 1) {
+                    currentTextureIndex++; // Incrémenter l'index
+                    loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                } else {
+                    step2Section.style.display = 'none';
+                    step3Section.style.display = 'block';
+                }
             });
-        } catch (error) {
-            console.error('Erreur lors de la récupération des images:', error);
-            const errorMessage = document.createElement('p');
-            errorMessage.textContent = `Erreur lors de la récupération des images: ${error.message}`;
-            imageGallery.appendChild(errorMessage);
+
+            imageGallery.appendChild(img);
         }
     }
 
