@@ -171,13 +171,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (textureType === 'potion') {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 } else if (textureType === 'paladium_bow') {
-                    filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
+                    filePath = `assets/palamod/textures/items/weapons/${textureType}/${imageUrl.split('/').pop()}`;
                 } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                 } else if (textureType === 'cave_block') {
                     filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
                 } else if (textureType === 'slime_green') {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
+                } else if (textureType === 'potion_launcher') {
+                    filePath = `assets/palamod/textures/items/${textureType}.png`;
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 }
