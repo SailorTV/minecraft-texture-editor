@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Image téléchargée avec succès: ${imageUrl}`);
             return await response.blob();
         } catch (error) {
-            console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
+            console.error(`Erreur  de téléchargement pour l'image ${imageUrl}: ${error}`);
             return null;
         }
     }
