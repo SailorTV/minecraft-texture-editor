@@ -173,6 +173,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (textureType === 'potion') {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
+
+                    // Ajouter les images associées
+                    const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion_overlay.png'];
+                    for (const image of associatedImages) {
+                        const associatedImageUrl = `textures/${resolution}/${textureType}${i}/${image}`;
+                        const associatedImageBlob = await fetchImage(associatedImageUrl);
+                        if (associatedImageBlob) {
+                            const associatedFilePath = `assets/minecraft/textures/items/${image}`;
+                            zip.file(associatedFilePath, associatedImageBlob, { binary: true });
+                        }
+                    }
                 } else if (textureType === 'paladium_bow') {
                     const folderPath = `textures/${resolution}/${textureType}${i}/`;
                     try {
