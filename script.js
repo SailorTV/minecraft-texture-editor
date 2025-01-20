@@ -165,8 +165,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (imageBlob) {
                 console.log(`Ajout de l'image ${imageUrl} au ZIP`);
                 console.log(imageBlob); // Log the imageBlob to debug the issue
-                // Ajouter l'image dans le ZIP avec le chemin spécifié
-                const filePath = `assets/minecraft/textures/items/${textureType}.png`;
+                
+                // Déterminer le chemin du fichier dans le ZIP
+                let filePath;
+                if (textureType === 'potion') {
+                    filePath = `assets/minecraft/textures/items/${textureType}.png`;
+                } else if (textureType === 'paladium_bow') {
+                    filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
+                } else if (['StrengthStick', 'StickOfGod', 'HealStick', 'HangGlider'].includes(textureType)) {
+                    filePath = `assets/palamod/textures/items/${textureType}.png`;
+                } else if (textureType === 'cave_block') {
+                    filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
+                } else if (textureType === 'slime_green') {
+                    filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
+                } else {
+                    filePath = `assets/minecraft/textures/items/${textureType}.png`;
+                }
+
                 console.log(`Chemin d'accès du fichier ajouté au ZIP : ${filePath}`);
                 zip.file(filePath, imageBlob, { binary: true });
             } else {
