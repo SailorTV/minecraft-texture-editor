@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmPackNameButton = document.getElementById('confirmPackNameButton');
     const closeModal = document.querySelector('.modal .close');
     let packName = '';
-    const textureSequence = ['diamond_sword', 'ender_pearl']; // Séquence de textures
+    const textureSequence = [
+        'diamond_sword', 'ender_pearl', 'potion', 'StrenghtStick', 'StickOfGod', 'HealStick', 'HangGlider', 
+        'paladium_bow', 'potion_laucher', 'cave_block', 'slime_green'
+    ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
 
@@ -55,17 +58,48 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Enregistrer la texture sélectionnée
                 selectedTextures[textureType] = img.src;
 
-                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                if (currentTextureIndex < textureSequence.length - 1) {
-                    currentTextureIndex++; // Incrémenter l'index
-                    loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                // Charger les images associées si nécessaire
+                if (textureType === 'potion' || textureType === 'paladium_bow') {
+                    loadAssociatedImages(textureType, resolution);
                 } else {
-                    step2Section.style.display = 'none';
-                    step3Section.style.display = 'block';
+                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                    if (currentTextureIndex < textureSequence.length - 1) {
+                        currentTextureIndex++; // Incrémenter l'index
+                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                    } else {
+                        step2Section.style.display = 'none';
+                        step3Section.style.display = 'block';
+                    }
                 }
             });
 
             imageGallery.appendChild(img);
+        }
+    }
+
+    // Fonction pour charger les images associées
+    function loadAssociatedImages(textureType, resolution) {
+        const associatedImages = {
+            'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion_overlay.png'],
+            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
+        };
+
+        const images = associatedImages[textureType];
+        images.forEach(image => {
+            const img = document.createElement('img');
+            img.src = `textures/${resolution}/${textureType}/${image}`;
+            img.alt = `${textureType} ${image}`;
+            img.classList.add('image-option');
+            imageGallery.appendChild(img);
+        });
+
+        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+        if (currentTextureIndex < textureSequence.length - 1) {
+            currentTextureIndex++; // Incrémenter l'index
+            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+        } else {
+            step2Section.style.display = 'none';
+            step3Section.style.display = 'block';
         }
     }
 
@@ -107,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajouter les fichiers pack.mcmeta et pack.png à la racine
         const packMeta = {
             "pack": {
-                "pack_format": 6,
-                "description": "Mon pack de textures personnalisé"
+                "pack_format": 7,
+                "description": "Mon pack de textures personnalisé mis à jour"
             }
         };
         zip.file("pack.mcmeta", JSON.stringify(packMeta, null, 2));
