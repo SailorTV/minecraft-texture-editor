@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModal = document.querySelector('.modal .close');
     let packName = '';
     const textureSequence = [
-        'ender_pearl', 'potion', 'StrenghtStick', 'HealStick', 'HangGlider', 
+        'ender_pearl', 'potion', 'strenghtStick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 } else if (textureType === 'paladium_bow') {
                     filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
-                } else if (['StrenghtStick', 'HealStick', 'HangGlider'].includes(textureType)) {
+                } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                 } else if (textureType === 'cave_block') {
                     filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
