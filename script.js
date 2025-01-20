@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const files = await response.json();
                     for (const file of files) {
                         const fileBlob = await fetchImage(`${folderPath}${file}`);
-                        const filePath = `assets/palamod/textures/items/weapons/${file}`;
+                        const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
                         zip.file(filePath, fileBlob, { binary: true });
                     }
                 } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
