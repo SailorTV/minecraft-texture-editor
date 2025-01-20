@@ -196,6 +196,11 @@ h2 {
     font-size: 2em;
 }
 
+h3 {
+    font-size: 2em;
+    color: black;
+}
+
 /* Styles pour le modal */
 .modal {
     display: none;
