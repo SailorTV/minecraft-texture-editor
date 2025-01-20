@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let filePath;
                 if (textureType === 'potion') {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'paladium_bow') {
                     const folderPath = `textures/${resolution}/${textureType}${i}/`;
                     const response = await fetch(folderPath);
