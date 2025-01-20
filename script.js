@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
+    let selectedResolution = ''; // Variable to store the selected resolution
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -26,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Erreur : Résolution invalide.');
                 return;
             }
+
+            selectedResolution = resolution; // Store the selected resolution
 
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
@@ -172,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/${textureType}${i}/`;
+                    const folderPath = `textures/${selectedResolution}/${textureType}${i}/`;
                     const response = await fetch(folderPath);
                     const files = await response.json();
                     for (const file of files) {
@@ -190,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'potion_launcher') {
-                    const folderPath = `textures/${resolution}/${textureType}${index}/`;
+                    const folderPath = `textures/${selectedResolution}/${textureType}${index}/`;
                     const response = await fetch(folderPath);
                     const files = await response.json();
                     for (const file of files) {
