@@ -8,14 +8,14 @@
 body {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.6;
-    background-color: #2a1b4f;
+    background-color: #525252;
     color: white;
     text-align: center;
 }
 
 /* Styles du header */
 header {
-    background-color: #2a1b4f;
+    background-color: #525252;
     color: white;
     padding: 40px 0;
 }
@@ -26,7 +26,7 @@ nav ul {
     justify-content: flex-start;
     padding: 0;
     margin: 0;
-}
+}   
 
 nav ul li {
     margin: 0 30px;
@@ -64,7 +64,7 @@ nav ul li a:hover::after {
 /* Style général des sections */
 main {
     padding: 20px;
-    background-color: #2a1b4f;
+    background-color: #525252;
 }
 
 /* Style des boutons */
@@ -142,7 +142,7 @@ button:hover {
 
 /* Footer */
 footer {
-    background-color: #2a1b4f;
+    background-color: #525252;
     color: white;
     text-align: center;
     padding: 15px;
