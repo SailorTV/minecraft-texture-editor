@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
+    let selectedResolution = ''; // Add this line to store the selected resolution
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            selectedResolution = resolution; // Store the selected resolution
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
 
@@ -130,11 +132,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Récupérer les URLs des textures sélectionnées
         const urls = Object.values(selectedTextures);
-        downloadZips(urls, packName);
+        downloadZips(urls, packName, selectedResolution); // Pass the selected resolution
     });
 
     // Fonction pour créer un fichier ZIP avec images en base64
-    async function downloadZips(urls, packName) {
+    async function downloadZips(urls, packName, resolution) {
         const zip = new JSZip();
         console.log('Démarrage du téléchargement des images...');
 
