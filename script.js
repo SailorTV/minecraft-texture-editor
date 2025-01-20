@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModal = document.querySelector('.modal .close');
     let packName = '';
     const textureSequence = [
-        'diamond_sword', 'ender_pearl', 'potion', 'StrenghtStick', 'StickOfGod', 'HealStick', 'HangGlider', 
+        'ender_pearl', 'potion', 'StickOfGod', 'HealStick', 'HangGlider', 
         'paladium_bow', 'potion_laucher', 'cave_block', 'slime_green'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Charger les images associées si nécessaire
                 if (textureType === 'potion' || textureType === 'paladium_bow') {
-                    loadAssociatedImages(textureType, resolution);
+                    loadAssociatedImages(textureType, resolution, i);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Fonction pour charger les images associées
-    function loadAssociatedImages(textureType, resolution) {
+    function loadAssociatedImages(textureType, resolution, index) {
         const associatedImages = {
             'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion_overlay.png'],
             'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/${image}`;
+            img.src = `textures/${resolution}/${textureType}${index}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 } else if (textureType === 'paladium_bow') {
                     filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
-                } else if (['StrengthStick', 'StickOfGod', 'HealStick', 'HangGlider'].includes(textureType)) {
+                } else if (['StickOfGod', 'HealStick', 'HangGlider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                 } else if (textureType === 'cave_block') {
                     filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
