@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'slime_green') {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
                 } else if (textureType === 'potion_launcher') {
-                    filePath = `assets/palamod/textures/items/${textureType}.png`;
+                    filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                 }
