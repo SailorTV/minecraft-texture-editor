@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModal = document.querySelector('.modal .close');
     let packName = '';
     const textureSequence = [
-        'ender_pearl', 'potion', 'strenghtStick', 'healstick', 'hangglider', 
+        'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
