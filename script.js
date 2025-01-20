@@ -168,24 +168,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 // Déterminer le chemin du fichier dans le ZIP
                 let filePath;
-                if (textureType === 'potion') {
-                    filePath = `assets/minecraft/textures/items/${textureType}.png`;
-                } else if (textureType === 'paladium_bow') {
-                    filePath = `assets/palamod/textures/items/weapons/${textureType}/${imageUrl.split('/').pop()}`;
+                if (textureType === 'potion' || textureType === 'paladium_bow') {
+                    const folderPath = `textures/${resolution}/${textureType}${i}/`;
+                    const response = await fetch(folderPath);
+                    const files = await response.json();
+                    for (const file of files) {
+                        const fileBlob = await fetchImage(`${folderPath}${file}`);
+                        const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
+                        zip.file(filePath, fileBlob, { binary: true });
+                    }
                 } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'cave_block') {
                     filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'slime_green') {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'potion_launcher') {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 }
 
                 console.log(`Chemin d'accès du fichier ajouté au ZIP : ${filePath}`);
-                zip.file(filePath, imageBlob, { binary: true });
             } else {
                 console.error(`Erreur avec l'image ${imageUrl}`);
             }
@@ -194,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Vérifier si des fichiers ont été ajoutés au ZIP
         console.log('Fichiers ajoutés au ZIP:', Object.keys(zip.files));
         if (Object.keys(zip.files).length === 0) {
-            alert('Erreur : Aucun fichier n\'a été ajouté au ZIP.');
+            alert('Erreur : Aucun fichier n a été ajouté au ZIP.');
             return;
         }
 
