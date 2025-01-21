@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Erreur : Nom du pack invalide.');
             return;
         }
-        packName = `&6 ${packName} ${selectedResolution}`; // Ajouter &6 et la résolution sélectionnée au nom du pack
+        packName = `&6${packName} ${selectedResolution}`; // Ajouter &6 et la résolution sélectionnée au nom du pack
         packNameModal.style.display = 'none';
 
         // Récupérer les URLs des textures sélectionnées
