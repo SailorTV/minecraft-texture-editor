@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
+                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'cave_block') {
