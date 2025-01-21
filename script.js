@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de textures
+    // Téléchargement du pack de texturess
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/${textureType}${i}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow${i}/`;
                     try {
                         const response = await fetch(folderPath);
                         if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
