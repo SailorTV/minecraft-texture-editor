@@ -89,10 +89,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            if (textureType === 'paladium_bow') {
+            if (textureType === 'potion') {
+                img.src = `textures/${resolution}/${textureType}/potion${index}/${image}`;
+            } else if (textureType === 'paladium_bow') {
                 img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
-            } else {
-                img.src = `textures/${resolution}/${textureType}${index}/${image}`;
             }
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
