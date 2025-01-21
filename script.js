@@ -89,7 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}${index}/${image}`;
+            if (textureType === 'paladium_bow') {
+                img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
+            } else {
+                img.src = `textures/${resolution}/${textureType}${index}/${image}`;
+            }
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -185,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow${i}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i}/`;
                     try {
                         const response = await fetch(folderPath);
                         if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
