@@ -209,19 +209,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'potion_launcher') {
-                    const folderPath = `textures/${resolution}/${textureType}${i}/`;
-                    try {
-                        const response = await fetch(folderPath);
-                        if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
-                        const text = await response.text();
-                        const files = JSON.parse(text);
-                        for (const file of files) {
-                            const fileBlob = await fetchImage(`${folderPath}${file}`);
-                            const filePath = `assets/palamod/textures/items/weapons/${file}`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        }
-                    } catch (error) {
-                        console.error(`Erreur de téléchargement pour le dossier ${folderPath}: ${error}`);
+                    const associatedImageUrl = `textures/${resolution}/${textureType}/image1.png`;
+                    const associatedImageBlob = await fetchImage(associatedImageUrl);
+                    if (associatedImageBlob) {
+                        filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
+                        zip.file(filePath, associatedImageBlob, { binary: true });
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
