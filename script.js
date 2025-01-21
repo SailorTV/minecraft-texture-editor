@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         images.forEach(image => {
             const img = document.createElement('img');
             if (textureType === 'potion') {
-                img.src = `textures/${resolution}/${textureType}/potion${index}/${image}`;
+                img.src = `textures/${resolution}/potion/potion${index}/${image}`;
             } else if (textureType === 'paladium_bow') {
                 img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
             }
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/${textureType}/potion${i}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${i}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
