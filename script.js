@@ -190,18 +190,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 } else if (textureType === 'paladium_bow') {
                     const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i}/`;
-                    try {
-                        const response = await fetch(folderPath);
-                        if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
-                        const text = await response.text();
-                        const files = JSON.parse(text);
-                        for (const file of files) {
-                            const fileBlob = await fetchImage(`${folderPath}${file}`);
+                    const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
+                    for (const file of files) {
+                        const fileUrl = `${folderPath}${file}`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/weapons/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
                         }
-                    } catch (error) {
-                        console.error(`Erreur de téléchargement pour le dossier ${folderPath}: ${error}`);
                     }
                 } else if (['strenghtstick', 'healstick', 'hangglider'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
