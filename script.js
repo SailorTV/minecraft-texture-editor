@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/potion${index}/${image}`;
+            img.src = `textures/${resolution}/${textureType}/paladium_bow${index}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/${textureType}/`;
+                    const folderPath = `textures/${resolution}/${textureType}/paladium_bow${i}/`;
                     try {
                         const response = await fetch(folderPath);
                         if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
