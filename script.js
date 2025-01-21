@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const files = JSON.parse(text);
                         for (const file of files) {
                             const fileBlob = await fetchImage(`${folderPath}${file}`);
-                            const filePath = `assets/palamod/textures/items/weapons/${textureType}/${file}`;
+                            const filePath = `assets/palamod/textures/items/weapons/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         }
                     } catch (error) {
