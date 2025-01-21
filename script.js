@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Erreur : Nom du pack invalide.');
             return;
         }
-        packName += `_${selectedResolution}`; // Ajouter la résolution sélectionnée au nom du pack
+        packName = `&6 ${packName} ${selectedResolution}`; // Ajouter &6 et la résolution sélectionnée au nom du pack
         packNameModal.style.display = 'none';
 
         // Récupérer les URLs des textures sélectionnées
