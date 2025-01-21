@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fonction pour charger les images associées
     function loadAssociatedImages(textureType, resolution, index) {
         const associatedImages = {
-            'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion_overlay.png'],
+            'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
             'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
         };
 
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     zip.file(filePath, imageBlob, { binary: true });
 
                     // Ajouter les images associées
-                    const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion_overlay.png'];
+                    const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
                         const associatedImageUrl = `textures/${resolution}/${textureType}/potion${i}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
