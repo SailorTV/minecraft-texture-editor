@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
 
-            // Charger les textures pour le premier élément (diamond_sword)
+            // Charger les textures pour le premier élément
             loadImageGallery(resolution, textureSequence[currentTextureIndex]);
         });
     });
@@ -157,7 +157,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
-
+        if (Object.keys(selectedTextures).length !== textureSequence.length) {
+            alert('Veuillez sélectionner toutes les textures.');
+            return;
+        }
 
         // Afficher le modal pour entrer le nom du pack
         packNameModal.style.display = 'block';
