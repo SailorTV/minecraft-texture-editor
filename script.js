@@ -277,17 +277,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
-                    for (const piece of modelPieces) {
-                        const fileUrl = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/palamod/textures/models/${piece}.png`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
-                        }
-                    }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
