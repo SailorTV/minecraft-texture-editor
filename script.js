@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Récupérer les URLs des textures sélectionnées
         const urls = Object.values(selectedTextures);
+        packNameModal.style.display = 'none'; // Fermer le modal avant de télécharger
         downloadZips(urls, packName, selectedResolution); // Passer la résolution sélectionnée
     });
 
