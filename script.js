@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (textureType === 'armure_paladium') {
             for (let i = 1; i <= 5; i++) {
                 const img = document.createElement('img');
-                img.src = `textures/${resolution}/armure_paladium/armurepaladium${i}/paladium_helmet.png`; // Afficher paladium_helmet pour chaque dossier
+                img.src = `textures/${resolution}/armure_paladium/image${i}.png`; // Afficher image pour chaque dossier
                 img.alt = `Armure Paladium ${i}`;
                 img.classList.add('image-option');
 
@@ -126,7 +126,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadAssociatedImages(textureType, resolution, index) {
         const associatedImages = {
             'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
-            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
+            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'],
+            'armure_paladium': ['paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png', 'paladium_armor_1.png', 'paladium_armor_2.png']
         };
 
         const images = associatedImages[textureType];
@@ -136,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 img.src = `textures/${resolution}/potion/potion${index}/${image}`;
             } else if (textureType === 'paladium_bow') {
                 img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
+            } else if (textureType === 'armure_paladium') {
+                img.src = `textures/${resolution}/armure_paladium/armurepaladium${index}/${image}`;
             }
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
