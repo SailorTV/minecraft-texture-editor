@@ -269,7 +269,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         const fileUrl = `${folderPath}${piece}.png`;
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
-                            const filePath = `assets/palamod/textures/items/${piece}.png`;
+                            let filePath;
+                            if (piece === 'paladium_green_armor_1' || piece === 'paladium_green_armor_2') {
+                                filePath = `assets/palamod/textures/models/${piece}.png`;
+                            } else {
+                                filePath = `assets/palamod/textures/items/${piece}.png`;
+                            }
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
