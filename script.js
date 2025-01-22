@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Ajouter un événement de clic pour sélectionner une texture
                 img.addEventListener('click', function () {
                     if (selectedTexture) {
-                        selectedTexture.classList.remove('selec 
+                        selectedTexture.classList.remove('selected');
                     }
 
                     img.classList.add('selected');
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
