@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Ajouter un événement de clic pour sélectionner une texture
                 img.addEventListener('click', function () {
                     if (selectedTexture) {
-                        selectedTexture.classList.remove('selected');
+                        selectedTexture.classList.remove('selec 
                     }
 
                     img.classList.add('selected');
