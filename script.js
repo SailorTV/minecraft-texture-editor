@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod',
+        'paladium_sword', 'paladium_green_sword'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -202,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod'].includes(textureType)) {
+                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'cave_block') {
