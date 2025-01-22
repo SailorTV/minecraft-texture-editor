@@ -125,17 +125,19 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadAssociatedImages(textureType, resolution, index) {
         const associatedImages = {
             'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
-            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
+            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'],
+            'armure_paladium': [
+                'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
+                'paladium_armor_1.png', 'paladium_armor_2.png',
+                'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
+                'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
+            ]
         };
 
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            if (textureType === 'potion') {
-                img.src = `textures/${resolution}/potion/potion${index}/${image}`;
-            } else if (textureType === 'paladium_bow') {
-                img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
-            }
+            img.src = `textures/${resolution}/${textureType}/${textureType}${index}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
