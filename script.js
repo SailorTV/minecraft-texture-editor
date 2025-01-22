@@ -243,21 +243,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 } else if (textureType === 'armure_paladium') {
                     const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
-                    const armorPieces = [
-                        'paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet',
-                        'paladium_armor_1', 'paladium_armor_2',
-                        'paladium_green_boots', 'paladium_green_leggings', 'paladium_green_chestplate', 'paladium_green_helmet',
-                        'paladium_green_armor_1', 'paladium_green_armor_2'
+                    const files = [
+                        'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
+                        'paladium_armor_1.png', 'paladium_armor_2.png',
+                        'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
+                        'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
                     ];
-                    for (const piece of armorPieces) {
-                        const fileUrl = `${folderPath}${piece}.png`;
+                    for (const file of files) {
+                        const fileUrl = `${folderPath}${file}`;
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
                             let filePath;
-                            if (piece === 'paladium_green_armor_1' || piece === 'paladium_green_armor_2') {
-                                filePath = `assets/palamod/textures/models/${piece}.png`;
+                            if (file.includes('armor')) {
+                                filePath = `assets/palamod/textures/models/${file}`;
                             } else {
-                                filePath = `assets/palamod/textures/items/${piece}.png`;
+                                filePath = `assets/palamod/textures/items/${file}`;
                             }
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
