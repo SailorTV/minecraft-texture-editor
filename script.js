@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod',
-        'paladium_sword', 'paladium_green_sword'
+        'paladium_sword', 'paladium_green_sword', 'armure_paladium'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -43,28 +43,34 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        for (let i = 1; i <= 5; i++) {
-            const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/image${i}.png`;
-            img.alt = `${textureType} Image ${i}`;
-            img.classList.add('image-option');
+        if (textureType === 'armure_paladium') {
+            for (let i = 1; i <= 5; i++) {
+                const img = document.createElement('img');
+                img.src = `textures/${resolution}/armure_paladium/armurepaladium${i}/paladium_helmet.png`; // Afficher paladium_helmet pour chaque dossier
+                img.alt = `Armure Paladium ${i}`;
+                img.classList.add('image-option');
 
-            // Ajouter un événement de clic pour sélectionner une texture
-            img.addEventListener('click', function () {
-                if (selectedTexture) {
-                    selectedTexture.classList.remove('selected');
-                }
+                // Ajouter un événement de clic pour sélectionner une texture
+                img.addEventListener('click', function () {
+                    if (selectedTexture) {
+                        selectedTexture.classList.remove('selected');
+                    }
 
-                img.classList.add('selected');
-                selectedTexture = img;
+                    img.classList.add('selected');
+                    selectedTexture = img;
 
-                // Enregistrer la texture sélectionnée
-                selectedTextures[textureType] = img.src;
+                    // Enregistrer les textures sélectionnées pour chaque pièce d'armure
+                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
+                    armorPieces.forEach(piece => {
+                        selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium${i}/${piece}.png`;
+                    });
 
-                // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow') {
-                    loadAssociatedImages(textureType, resolution, i);
-                } else {
+                    // Enregistrer les modèles d'armure
+                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
+                    modelPieces.forEach(piece => {
+                        selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium${i}/${piece}.png`;
+                    });
+
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
                         currentTextureIndex++; // Incrémenter l'index
@@ -73,10 +79,46 @@ document.addEventListener('DOMContentLoaded', function () {
                         step2Section.style.display = 'none';
                         step3Section.style.display = 'block';
                     }
-                }
-            });
+                });
 
-            imageGallery.appendChild(img);
+                imageGallery.appendChild(img);
+            }
+        } else {
+            for (let i = 1; i <= 5; i++) {
+                const img = document.createElement('img');
+                img.src = `textures/${resolution}/${textureType}/image${i}.png`;
+                img.alt = `${textureType} Image ${i}`;
+                img.classList.add('image-option');
+
+                // Ajouter un événement de clic pour sélectionner une texture
+                img.addEventListener('click', function () {
+                    if (selectedTexture) {
+                        selectedTexture.classList.remove('selected');
+                    }
+
+                    img.classList.add('selected');
+                    selectedTexture = img;
+
+                    // Enregistrer la texture sélectionnée
+                    selectedTextures[textureType] = img.src;
+
+                    // Charger les images associées si nécessaire
+                    if (textureType === 'potion' || textureType === 'paladium_bow') {
+                        loadAssociatedImages(textureType, resolution, i);
+                    } else {
+                        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                        if (currentTextureIndex < textureSequence.length - 1) {
+                            currentTextureIndex++; // Incrémenter l'index
+                            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                        } else {
+                            step2Section.style.display = 'none';
+                            step3Section.style.display = 'block';
+                        }
+                    }
+                });
+
+                imageGallery.appendChild(img);
+            }
         }
     }
 
@@ -218,6 +260,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (associatedImageBlob) {
                         filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
                         zip.file(filePath, associatedImageBlob, { binary: true });
+                    }
+                } else if (textureType === 'armure_paladium') {
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
+                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
+                    for (const piece of armorPieces) {
+                        const fileUrl = `${folderPath}${piece}.png`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/items/${piece}.png`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
+                        }
+                    }
+                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
+                    for (const piece of modelPieces) {
+                        const fileUrl = `${folderPath}${piece}.png`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/items/${piece}.png`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
+                        }
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
