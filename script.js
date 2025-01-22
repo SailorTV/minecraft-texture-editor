@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (textureType === 'armure_paladium') {
             const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/armure_paladium/armurepaladium1/combined.png`; // Image combinée des pièces d'armure
+            img.src = `textures/${resolution}/armure_paladium/combined.png`; // Image combinée des pièces d'armure
             img.alt = `Armure Paladium`;
             img.classList.add('image-option');
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Enregistrer les textures sélectionnées pour chaque pièce d'armure
                 armorPieces.forEach(piece => {
-                    selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
+                    selectedTextures[piece] = `textures/${resolution}/armure_paladium/${piece}.png`;
                 });
 
                 // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
