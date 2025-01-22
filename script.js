@@ -44,37 +44,45 @@ document.addEventListener('DOMContentLoaded', function () {
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         if (textureType === 'armure_paladium') {
-            const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
-            const img = document.createElement('img');
-            img.src = `textures/${resolution}/armure_paladium/combined.png`; // Image combinée des pièces d'armure
-            img.alt = `Armure Paladium`;
-            img.classList.add('image-option');
+            for (let i = 1; i <= 5; i++) {
+                const img = document.createElement('img');
+                img.src = `textures/${resolution}/armure_paladium/armurepaladium${i}/paladium_chestplate.png`; // Afficher paladium_chestplate pour chaque dossier
+                img.alt = `Armure Paladium ${i}`;
+                img.classList.add('image-option');
 
-            // Ajouter un événement de clic pour sélectionner une texture
-            img.addEventListener('click', function () {
-                if (selectedTexture) {
-                    selectedTexture.classList.remove('selected');
-                }
+                // Ajouter un événement de clic pour sélectionner une texture
+                img.addEventListener('click', function () {
+                    if (selectedTexture) {
+                        selectedTexture.classList.remove('selected');
+                    }
 
-                img.classList.add('selected');
-                selectedTexture = img;
+                    img.classList.add('selected');
+                    selectedTexture = img;
 
-                // Enregistrer les textures sélectionnées pour chaque pièce d'armure
-                armorPieces.forEach(piece => {
-                    selectedTextures[piece] = `textures/${resolution}/armure_paladium/${piece}.png`;
+                    // Enregistrer les textures sélectionnées pour chaque pièce d'armure
+                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
+                    armorPieces.forEach(piece => {
+                        selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium${i}/${piece}.png`;
+                    });
+
+                    // Enregistrer les modèles d'armure
+                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
+                    modelPieces.forEach(piece => {
+                        selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium${i}/${piece}.png`;
+                    });
+
+                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                    if (currentTextureIndex < textureSequence.length - 1) {
+                        currentTextureIndex++; // Incrémenter l'index
+                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                    } else {
+                        step2Section.style.display = 'none';
+                        step3Section.style.display = 'block';
+                    }
                 });
 
-                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                if (currentTextureIndex < textureSequence.length - 1) {
-                    currentTextureIndex++; // Incrémenter l'index
-                    loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                } else {
-                    step2Section.style.display = 'none';
-                    step3Section.style.display = 'block';
-                }
-            });
-
-            imageGallery.appendChild(img);
+                imageGallery.appendChild(img);
+            }
         } else {
             for (let i = 1; i <= 5; i++) {
                 const img = document.createElement('img');
