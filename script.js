@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     selectedTextures[textureType] = img.src;
 
                     // Charger les images associées si nécessaire
-                    if (textureType === 'potion' || textureType === 'paladium_bow') {
+                    if (textureType === 'potion' || textureType === 'paladium_bow' || textureType === 'armure_paladium') {
                         loadAssociatedImages(textureType, resolution, i);
                     } else {
                         // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
