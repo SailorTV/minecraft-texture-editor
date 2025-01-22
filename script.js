@@ -266,12 +266,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 } else if (textureType === 'armure_paladium') {
                     const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
-                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet', 'paladium_armor_1', 'paladium_armor_2'];
+                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
                     for (const piece of armorPieces) {
                         const fileUrl = `${folderPath}${piece}.png`;
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/${piece}.png`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
+                        }
+                    }
+                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
+                    for (const piece of modelPieces) {
+                        const fileUrl = `${folderPath}${piece}.png`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/models/${piece}.png`;
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
