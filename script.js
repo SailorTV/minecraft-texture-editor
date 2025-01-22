@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod',
-        'paladium_sword', 'paladium_green_sword', 'armure_paladium'
+        'paladium_sword', 'paladium_green_sword'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -43,11 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        if (textureType === 'armure_paladium') {
-            const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
+        for (let i = 1; i <= 5; i++) {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/armure_paladium/armurepaladium1/combined.png`; // Image combinée des pièces d'armure
-            img.alt = `Armure Paladium`;
+            img.src = `textures/${resolution}/${textureType}/image${i}.png`;
+            img.alt = `${textureType} Image ${i}`;
             img.classList.add('image-option');
 
             // Ajouter un événement de clic pour sélectionner une texture
@@ -59,58 +58,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 img.classList.add('selected');
                 selectedTexture = img;
 
-                // Enregistrer les textures sélectionnées pour chaque pièce d'armure
-                armorPieces.forEach(piece => {
-                    selectedTextures[piece] = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
-                });
+                // Enregistrer la texture sélectionnée
+                selectedTextures[textureType] = img.src;
 
-                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                if (currentTextureIndex < textureSequence.length - 1) {
-                    currentTextureIndex++; // Incrémenter l'index
-                    loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                // Charger les images associées si nécessaire
+                if (textureType === 'potion' || textureType === 'paladium_bow') {
+                    loadAssociatedImages(textureType, resolution, i);
                 } else {
-                    step2Section.style.display = 'none';
-                    step3Section.style.display = 'block';
+                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                    if (currentTextureIndex < textureSequence.length - 1) {
+                        currentTextureIndex++; // Incrémenter l'index
+                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                    } else {
+                        step2Section.style.display = 'none';
+                        step3Section.style.display = 'block';
+                    }
                 }
             });
 
             imageGallery.appendChild(img);
-        } else {
-            for (let i = 1; i <= 5; i++) {
-                const img = document.createElement('img');
-                img.src = `textures/${resolution}/${textureType}/image${i}.png`;
-                img.alt = `${textureType} Image ${i}`;
-                img.classList.add('image-option');
-
-                // Ajouter un événement de clic pour sélectionner une texture
-                img.addEventListener('click', function () {
-                    if (selectedTexture) {
-                        selectedTexture.classList.remove('selected');
-                    }
-
-                    img.classList.add('selected');
-                    selectedTexture = img;
-
-                    // Enregistrer la texture sélectionnée
-                    selectedTextures[textureType] = img.src;
-
-                    // Charger les images associées si nécessaire
-                    if (textureType === 'potion' || textureType === 'paladium_bow') {
-                        loadAssociatedImages(textureType, resolution, i);
-                    } else {
-                        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                        if (currentTextureIndex < textureSequence.length - 1) {
-                            currentTextureIndex++; // Incrémenter l'index
-                            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                        } else {
-                            step2Section.style.display = 'none';
-                            step3Section.style.display = 'block';
-                        }
-                    }
-                });
-
-                imageGallery.appendChild(img);
-            }
         }
     }
 
@@ -260,18 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/${textureType}/image${j}.png`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
-                        }
-                    }
-                } else if (textureType === 'armure_paladium') {
-                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
-                    for (const piece of armorPieces) {
-                        const fileUrl = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/palamod/textures/items/${piece}.png`;
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
