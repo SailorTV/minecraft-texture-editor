@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod'].includes(textureType)) {
+                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'cave_block') {
@@ -218,18 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (associatedImageBlob) {
                         filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
                         zip.file(filePath, associatedImageBlob, { binary: true });
-                    }
-                } else if (['paladium_sword', 'paladium_green_sword'].includes(textureType)) {
-                    const folderPath = `textures/${resolution}/${textureType}/`;
-                    for (let j = 1; j <= 5; j++) {
-                        const fileUrl = `${folderPath}image${j}.png`;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/palamod/textures/items/${textureType}/image${j}.png`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
-                        }
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
