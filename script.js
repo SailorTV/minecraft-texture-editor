@@ -241,22 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword'].includes(textureType)) {
-                    filePath = `assets/palamod/textures/items/${textureType}.png`;
-                    zip.file(filePath, imageBlob, { binary: true });
-                } else if (textureType === 'cave_block') {
-                    filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
-                    zip.file(filePath, imageBlob, { binary: true });
-                } else if (textureType === 'slime_green') {
-                    filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
-                    zip.file(filePath, imageBlob, { binary: true });
-                } else if (textureType === 'potion_launcher') {
-                    const associatedImageUrl = `textures/${resolution}/${textureType}/image1.png`;
-                    const associatedImageBlob = await fetchImage(associatedImageUrl);
-                    if (associatedImageBlob) {
-                        filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
-                        zip.file(filePath, associatedImageBlob, { binary: true });
-                    }
                 } else if (textureType === 'armure_paladium') {
                     const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
                     const armorPieces = [
@@ -279,6 +263,22 @@ document.addEventListener('DOMContentLoaded', function () {
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
+                    }
+                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword'].includes(textureType)) {
+                    filePath = `assets/palamod/textures/items/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
+                } else if (textureType === 'cave_block') {
+                    filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
+                } else if (textureType === 'slime_green') {
+                    filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
+                } else if (textureType === 'potion_launcher') {
+                    const associatedImageUrl = `textures/${resolution}/${textureType}/image1.png`;
+                    const associatedImageBlob = await fetchImage(associatedImageUrl);
+                    if (associatedImageBlob) {
+                        filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
+                        zip.file(filePath, associatedImageBlob, { binary: true });
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
