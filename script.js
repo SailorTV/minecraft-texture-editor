@@ -274,27 +274,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
-                    const armorPieces = ['paladium_boots', 'paladium_leggings', 'paladium_chestplate', 'paladium_helmet'];
-                    for (const piece of armorPieces) {
-                        const fileUrl = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/palamod/textures/items/${piece}.png`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
+                    try {
+                        const response = await fetch(folderPath);
+                        if (!response.ok) throw new Error(`Erreur de téléchargement: ${folderPath}`);
+                        const text = await response.text();
+                        const files = JSON.parse(text);
+                        for (const file of files) {
+                            const fileBlob = await fetchImage(`${folderPath}${file}`);
+                            const filePath = `assets/palamod/textures/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
                         }
-                    }
-                    const modelPieces = ['paladium_armor_1', 'paladium_armor_2'];
-                    for (const piece of modelPieces) {
-                        const fileUrl = `textures/${resolution}/armure_paladium/armurepaladium1/${piece}.png`;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/palamod/textures/models/${piece}.png`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
-                        }
+                    } catch (error) {
+                        console.error(`Erreur de téléchargement pour le dossier ${folderPath}: ${error}`);
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
