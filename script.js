@@ -153,10 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Téléchargement du pack de texturess
     downloadButton.addEventListener('click', function () {
-        if (Object.keys(selectedTextures).length !== textureSequence.length) {
-            alert('Veuillez sélectionner toutes les textures.');
-            return;
-        }
+
 
         // Afficher le modal pour entrer le nom du pack
         packNameModal.style.display = 'block';
