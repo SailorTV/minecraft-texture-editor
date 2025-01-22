@@ -43,7 +43,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #e74c3c;
+    background-color: #e67e22;
     color: #ecf0f1;
     border-radius: 5px;
 }
@@ -56,7 +56,7 @@ main {
 
 /* Style des boutons */
 button {
-    background-color: #e74c3c;
+    background-color: #e67e22;
     color: #ecf0f1;
     border: none;
     border-radius: 5px;
@@ -67,7 +67,7 @@ button {
 }
 
 button:hover {
-    background-color: #c0392b;
+    background-color: #d35400;
     transform: scale(1.05);
 }
 
@@ -93,7 +93,7 @@ button:hover {
 }
 
 .option img:hover {
-    border: 5px solid #e74c3c;
+    border: 5px solid #e67e22;
     transform: scale(1.1);
 }
 
@@ -117,7 +117,7 @@ button:hover {
 }
 
 #texturesGallery img:hover {
-    border: 5px solid #e74c3c;
+    border: 5px solid #e67e22;
     transform: scale(1.1);
 }
 
@@ -137,7 +137,7 @@ footer {
 }
 
 footer a {
-    color: #e74c3c;
+    color: #e67e22;
     text-decoration: none;
 }
 
@@ -179,7 +179,7 @@ footer a:hover {
 
 .close:hover,
 .close:focus {
-    color: #e74c3c;
+    color: #e67e22;
     text-decoration: none;
     cursor: pointer;
 }
@@ -194,7 +194,7 @@ footer a:hover {
 }
 
 #confirmPackNameButton {
-    background-color: #e74c3c;
+    background-color: #e67e22;
     color: #ecf0f1;
     border: none;
     border-radius: 5px;
@@ -205,7 +205,7 @@ footer a:hover {
 }
 
 #confirmPackNameButton:hover {
-    background-color: #c0392b;
+    background-color: #d35400;
     transform: scale(1.05);
 }
 
