@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
