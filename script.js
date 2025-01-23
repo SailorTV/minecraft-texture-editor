@@ -67,10 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Charger les images associées si nécessaire
                 if (textureType === 'potion') {
                     loadAssociatedImages(textureType, resolution, potionIndex);
-                    potionIndex = Math.min(potionIndex + 1, 5);
                 } else if (textureType === 'paladium_bow') {
                     loadAssociatedImages(textureType, resolution, paladiumBowIndex);
-                    paladiumBowIndex = Math.min(paladiumBowIndex + 1, 5);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
@@ -106,6 +104,13 @@ document.addEventListener('DOMContentLoaded', function () {
             img.classList.add('image-option');
             imageGallery.appendChild(img);
         });
+
+        // Incrémenter l'index pour le type de texture
+        if (textureType === 'potion') {
+            potionIndex = Math.min(potionIndex + 1, 5);
+        } else if (textureType === 'paladium_bow') {
+            paladiumBowIndex = Math.min(paladiumBowIndex + 1, 5);
+        }
 
         // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
         if (currentTextureIndex < textureSequence.length - 1) {
