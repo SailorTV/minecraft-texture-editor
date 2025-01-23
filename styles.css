@@ -239,3 +239,19 @@ h3 {
     color: #2c3e50;
     margin-bottom: 10px;
 }
+
+/* Styles for zoomed icon images in top-left corner */
+.zoomed-icon-container {
+    position: relative;
+    width: 50px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    overflow: hidden;
+}
+
+.zoomed-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(2); /* Adjust the scale as needed */
+    transform-origin: top left;
+}

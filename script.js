@@ -42,35 +42,51 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Fonction pour créer un conteneur d'icône zoomée
+    function createZoomedIconContainer(src) {
+        const container = document.createElement('div');
+        container.classList.add('zoomed-icon-container');
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.classList.add('zoomed-icon');
+
+        container.appendChild(img);
+        return container;
+    }
+
     // Fonction pour charger la galerie d'images
     function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         for (let i = 1; i <= 5; i++) {
-            const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/image${i}.png`;
-            img.alt = `${textureType} Image ${i}`;
-            img.classList.add('image-option');
+            const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
+            let imageContainer;
+
+            if (textureType === 'icons') {
+                imageContainer = createZoomedIconContainer(imgSrc);
+            } else {
+                imageContainer = document.createElement('img');
+                imageContainer.src = imgSrc;
+                imageContainer.alt = `${textureType} Image ${i}`;
+                imageContainer.classList.add('image-option');
+            }
 
             // Ajouter un événement de clic pour sélectionner une texture
-            img.addEventListener('click', function () {
+            imageContainer.addEventListener('click', function () {
                 if (selectedTexture) {
                     selectedTexture.classList.remove('selected');
                 }
 
-                img.classList.add('selected');
-                selectedTexture = img;
+                imageContainer.classList.add('selected');
+                selectedTexture = imageContainer;
 
                 // Enregistrer la texture sélectionnée
-                selectedTextures[textureType] = img.src;
+                selectedTextures[textureType] = imgSrc;
 
                 // Charger les images associées si nécessaire
-                if (textureType === 'potion') {
-                    loadAssociatedImages(textureType, resolution, i);
-                } else if (textureType === 'paladium_bow') {
-                    loadAssociatedImages(textureType, resolution, i);
-                } else if (textureType === 'armure_paladium') {
+                if (textureType === 'potion' || textureType === 'paladium_bow' || textureType === 'armure_paladium') {
                     loadAssociatedImages(textureType, resolution, i);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
@@ -84,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            imageGallery.appendChild(img);
+            imageGallery.appendChild(imageContainer);
         }
     }
 
@@ -259,6 +275,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
+                } else if (textureType === 'icons') {
+                    filePath = `assets/minecraft/textures/gui/icons.png`;
+                    zip.file(filePath, imageBlob, { binary: true });
                 } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod'].includes(textureType)) {
                     filePath = `assets/palamod/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
