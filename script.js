@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
     let selectedResolution = ''; // Ajouter cette ligne pour stocker la résolution sélectionnée
 
+    // Indices indépendants pour chaque type de texture nécessitant des images associées
+    const textureIndices = {
+        'potion': 1,
+        'paladium_bow': 1,
+        'armure_paladium': 1
+    };
+
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
         option.addEventListener('click', function () {
@@ -94,13 +101,17 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         const images = associatedImages[textureType];
+        const textureIndex = textureIndices[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/${textureType}${Math.min(index, 5)}/${image}`;
+            img.src = `textures/${resolution}/${textureType}/${textureType}${Math.min(textureIndex, 5)}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
         });
+
+        // Incrémenter l'index pour le type de texture
+        textureIndices[textureType] = Math.min(textureIndex + 1, 5);
 
         // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
         if (currentTextureIndex < textureSequence.length - 1) {
@@ -207,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${Math.min(i + 1, 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
