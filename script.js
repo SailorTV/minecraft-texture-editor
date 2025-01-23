@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/armurepaladium${Math.min(index, 5)}/${image}`;
+            img.src = `textures/${resolution}/${textureType}/${textureType}${Math.min(index, 5)}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
