@@ -52,7 +52,15 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = src;
         img.classList.add('zoomed-icon');
 
+        const colorPicker = document.createElement('input');
+        colorPicker.type = 'color';
+        colorPicker.classList.add('color-picker');
+        colorPicker.addEventListener('input', function () {
+            img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
+        });
+
         container.appendChild(img);
+        container.appendChild(colorPicker);
         return container;
     }
 
@@ -68,10 +76,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (textureType === 'icons') {
                 imageContainer = createZoomedIconContainer(imgSrc);
             } else {
-                imageContainer = document.createElement('img');
-                imageContainer.src = imgSrc;
-                imageContainer.alt = `${textureType} Image ${i}`;
-                imageContainer.classList.add('image-option');
+                imageContainer = document.createElement('div');
+                imageContainer.classList.add('image-container');
+
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `${textureType} Image ${i}`;
+                img.classList.add('image-option');
+
+                const colorPicker = document.createElement('input');
+                colorPicker.type = 'color';
+                colorPicker.classList.add('color-picker');
+                colorPicker.addEventListener('input', function () {
+                    img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
+                });
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(colorPicker);
             }
 
             // Ajouter un événement de clic pour sélectionner une texture

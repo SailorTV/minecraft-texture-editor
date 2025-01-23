@@ -271,3 +271,9 @@ h3 {
     transform: none; /* Disable the transform animation */
     border: 3px solid transparent; /* Keep the border transparent */
 }
+
+/* Styles for color picker */
+.color-picker {
+    margin-top: 10px;
+    display: block;
+}
