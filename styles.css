@@ -256,7 +256,7 @@ h3 {
     transform-origin: top left;
 }
 
-/* Remove hover animation for icons */
+/* Ensure no hover animation for icons */
 .zoomed-icon-container:hover .zoomed-icon {
     transform: scale(5); /* Ensure the scale remains the same on hover */
 }
@@ -265,4 +265,9 @@ h3 {
 .image-option:hover {
     transform: none; /* Disable the transform animation */
     border: 3px solid transparent; /* Keep the border transparent */
+}
+
+/* Ensure no hover animation for zoomed-icon-container */
+.zoomed-icon-container:hover {
+    transform: none; /* Disable the transform animation */
 }
