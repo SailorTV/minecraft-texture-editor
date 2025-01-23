@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
 
-            // Charger les textures pour le premier élément (diamond_sword)
+            // Charger les textures pour le premier élément
             loadImageGallery(resolution, textureSequence[currentTextureIndex]);
         });
     });
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedTextures[textureType] = img.src;
 
                 // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow'|| textureType === 'armure_paladium') {
-                    loadAssociatedImages(textureType, resolution, i);
+                if (textureType === 'potion' || textureType === 'paladium_bow' || textureType === 'armure_paladium') {
+                    loadAssociatedImages(textureType, resolution);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
@@ -87,8 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Fonction pour charger les images associées
-    function loadAssociatedImages(textureType, resolution, index) {
-        console.log(`Chargement des images associées pour ${textureType} avec index ${index}`);
+    function loadAssociatedImages(textureType, resolution) {
+        const textureIndex = textureIndices[textureType];
+        console.log(`Chargement des images associées pour ${textureType} avec index ${textureIndex}`);
         const associatedImages = {
             'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
             'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'],
@@ -101,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         const images = associatedImages[textureType];
-        const textureIndex = textureIndices[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
             img.src = `textures/${resolution}/${textureType}/${textureType}${Math.min(textureIndex, 5)}/${image}`;
@@ -123,13 +123,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
-        if (Object.keys(selectedTextures).length !== textureSequence.length) {
-            alert('Veuillez sélectionner toutes les textures.');
-            return;
-        }
-
         // Afficher le modal pour entrer le nom du pack
         packNameModal.style.display = 'block';
     });
@@ -151,6 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Récupérer les URLs des textures sélectionnées
         const urls = Object.values(selectedTextures);
+        packNameModal.style.display = 'none'; // Fermer le modal avant de télécharger
         downloadZips(urls, packName, selectedResolution); // Passer la résolution sélectionnée
     });
 
@@ -196,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/potion/potion${Math.min(i + 1, 5)}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${Math.min(textureIndices['potion'], 5)}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -204,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${Math.min(textureIndices['paladium_bow'], 5)}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
@@ -216,9 +212,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
-                    
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(textureIndices['armure_paladium'], 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
