@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod','armure_paladium'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 'armure_paladium'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/potion/potion${i}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${Math.min(i + 1, 5)}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${Math.min(i + 1, 5)}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(i + 1, 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
