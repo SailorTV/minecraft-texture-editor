@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const e1 = document.querySelectorAll('.option');
     const step2Section = document.getElementById('step2');
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
 
-            // Charger les textures pour le premier élément (diamond_sword)
+            // Charger les textures pour le premier élément
             loadImageGallery(resolution, textureSequence[currentTextureIndex]);
         });
     });
@@ -110,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
@@ -183,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/potion/potion${i}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${i + 1}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -191,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i + 1}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
