@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
+                    
                 } else if (textureType === 'armure_paladium') {
                     const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${i}/`;
                     const files = [
