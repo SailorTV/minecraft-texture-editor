@@ -252,13 +252,13 @@ h3 {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(8,5); /* Increase the scale for more zoom */
+    transform: scale(9); /* Increase the scale for more zoom */
     transform-origin: top left;
 }
 
 /* Ensure no hover animation for icons */
 .zoomed-icon-container:hover .zoomed-icon {
-    transform: scale(8,5); /* Ensure the scale remains the same on hover */
+    transform: scale(8); /* Ensure the scale remains the same on hover */
 }
 
 /* Ensure no hover animation for zoomed-icon-container */
