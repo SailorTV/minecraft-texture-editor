@@ -112,15 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Incrémenter l'index pour le type de texture
         textureIndices[textureType] = Math.min(textureIndex + 1, 5);
-
-        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-        if (currentTextureIndex < textureSequence.length - 1) {
-            currentTextureIndex++; // Incrémenter l'index
-            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-        } else {
-            step2Section.style.display = 'none';
-            step3Section.style.display = 'block';
-        }
     }
 
     // Téléchargement du pack de textures
