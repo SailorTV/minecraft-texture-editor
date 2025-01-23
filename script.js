@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 'armure_paladium'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 'armure_paladium', 'icons'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
