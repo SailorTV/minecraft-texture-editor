@@ -258,7 +258,7 @@ h3 {
 
 /* Ensure no hover animation for icons */
 .zoomed-icon-container:hover .zoomed-icon {
-    transform: scale(8); /* Ensure the scale remains the same on hover */
+    transform: scale(9); /* Ensure the scale remains the same on hover */
 }
 
 /* Ensure no hover animation for zoomed-icon-container */
