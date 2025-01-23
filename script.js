@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
     let selectedResolution = ''; // Ajouter cette ligne pour stocker la résolution sélectionnée
 
+    // Indices indépendants pour chaque type de texture nécessitant des images associées
+    let potionIndex = 1;
+    let paladiumBowIndex = 1;
+
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
         option.addEventListener('click', function () {
@@ -61,8 +65,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedTextures[textureType] = img.src;
 
                 // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow') {
-                    loadAssociatedImages(textureType, resolution, i);
+                if (textureType === 'potion') {
+                    loadAssociatedImages(textureType, resolution, potionIndex);
+                    potionIndex = Math.min(potionIndex + 1, 5);
+                } else if (textureType === 'paladium_bow') {
+                    loadAssociatedImages(textureType, resolution, paladiumBowIndex);
+                    paladiumBowIndex = Math.min(paladiumBowIndex + 1, 5);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
@@ -182,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/potion/potion${i + 1}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${potionIndex}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -190,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${i + 1}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${paladiumBowIndex}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
