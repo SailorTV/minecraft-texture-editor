@@ -233,7 +233,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
-                        'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
+                        'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png'
+                    ];
+                    const modelFiles = [
+                        'paladium_armor_1.png', 'paladium_armor_2.png',
                         'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
                     ];
                     for (const file of files) {
@@ -241,6 +244,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
+                        }
+                    }
+                    for (const file of modelFiles) {
+                        const fileUrl = `${folderPath}${file}`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/models/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
