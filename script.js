@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/armurepaladium${Math.min(index, 5)}/${image}`;
+            img.src = `textures/${resolution}/${textureType}/armure_paladium${Math.min(index, 5)}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${Math.min(i + 1, 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
