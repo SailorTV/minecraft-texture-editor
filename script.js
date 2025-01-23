@@ -66,9 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Charger les images associées si nécessaire
                 if (textureType === 'potion') {
-                    loadAssociatedImages(textureType, resolution, i);
+                    loadAssociatedImages(textureType, resolution, potionIndex);
                 } else if (textureType === 'paladium_bow') {
-                    loadAssociatedImages(textureType, resolution, i);
+                    loadAssociatedImages(textureType, resolution, paladiumBowIndex);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
                     if (currentTextureIndex < textureSequence.length - 1) {
@@ -107,9 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Incrémenter l'index pour le type de texture
         if (textureType === 'potion') {
-            potionIndex = index;
+            potionIndex = Math.min(potionIndex + 1, 5);
         } else if (textureType === 'paladium_bow') {
-            paladiumBowIndex = index;
+            paladiumBowIndex = Math.min(paladiumBowIndex + 1, 5);
         }
 
         // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
@@ -257,10 +257,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
-        // Reset indices after download
-        potionIndex = 1;
-        paladiumBowIndex = 1;
     }
 
     // Fonction pour récupérer l'image en tant que Blob via fetch
