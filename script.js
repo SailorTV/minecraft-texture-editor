@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod','armure_paladium'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedTextures[textureType] = img.src;
 
                 // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow') {
+                if (textureType === 'potion' || textureType === 'paladium_bow'|| textureType === 'armure_paladium') {
                     loadAssociatedImages(textureType, resolution, i);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
@@ -83,17 +83,19 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadAssociatedImages(textureType, resolution, index) {
         const associatedImages = {
             'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
-            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png']
+            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'],
+            'armure_paladium': [
+                'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
+                'paladium_armor_1.png', 'paladium_armor_2.png',
+                'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
+                'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
+            ]
         };
 
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            if (textureType === 'potion') {
-                img.src = `textures/${resolution}/potion/potion${index}/${image}`;
-            } else if (textureType === 'paladium_bow') {
-                img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
-            }
+            img.src = `textures/${resolution}/${textureType}/${textureType}${index}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -197,6 +199,24 @@ document.addEventListener('DOMContentLoaded', function () {
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/weapons/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        } else {
+                            console.error(`Erreur avec l'image ${fileUrl}`);
+                        }
+                    }
+                } else if (textureType === 'armure_paladium') {
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${i}/`;
+                    const files = [
+                        'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
+                        'paladium_armor_1.png', 'paladium_armor_2.png',
+                        'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
+                        'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
+                    ];
+                    for (const file of files) {
+                        const fileUrl = `${folderPath}${file}`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/items/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         } else {
                             console.error(`Erreur avec l'image ${fileUrl}`);
