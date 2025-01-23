@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
-        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod','armure_paladium'
+        'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 'armure_paladium'
     ]; // Séquence de textures
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             step1Section.style.display = 'none';
             step2Section.style.display = 'block';
 
-            // Charger les textures pour le premier élément (diamond_sword)
+            // Charger les textures pour le premier élément
             loadImageGallery(resolution, textureSequence[currentTextureIndex]);
         });
     });
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 selectedTextures[textureType] = img.src;
 
                 // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow'|| textureType === 'armure_paladium') {
+                if (textureType === 'potion' || textureType === 'paladium_bow' || textureType === 'armure_paladium') {
                     loadAssociatedImages(textureType, resolution, i);
                 } else {
                     // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const images = associatedImages[textureType];
         images.forEach(image => {
             const img = document.createElement('img');
-            img.src = `textures/${resolution}/${textureType}/${textureType}${index}/${image}`;
+            img.src = `textures/${resolution}/${textureType}/armurepaladium${Math.min(index, 5)}/${image}`;
             img.alt = `${textureType} ${image}`;
             img.classList.add('image-option');
             imageGallery.appendChild(img);
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Téléchargement du pack de texturess
+    // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
         if (Object.keys(selectedTextures).length !== textureSequence.length) {
             alert('Veuillez sélectionner toutes les textures.');
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${i}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(i + 1, 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
