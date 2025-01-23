@@ -277,3 +277,10 @@ h3 {
     margin-top: 10px;
     display: block;
 }
+
+/* Styles for image customization modal */
+.custom-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}

@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const packNameInput = document.getElementById('packNameInput');
     const confirmPackNameButton = document.getElementById('confirmPackNameButton');
     const closeModal = document.querySelector('.modal .close');
+    const imageCustomizationModal = document.getElementById('imageCustomizationModal');
+    const customImage = document.getElementById('customImage');
+    const colorPicker = document.getElementById('colorPicker');
+    const confirmCustomizationButton = document.getElementById('confirmCustomizationButton');
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
@@ -18,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
     let selectedResolution = ''; // Ajouter cette ligne pour stocker la résolution sélectionnée
+    let selectedTexture = null; // Stocke la texture sélectionnée pour personnalisation
 
     // Indices indépendants pour chaque type de texture nécessitant des images associées
     let potionIndex = 1;
@@ -52,22 +57,14 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = src;
         img.classList.add('zoomed-icon');
 
-        const colorPicker = document.createElement('input');
-        colorPicker.type = 'color';
-        colorPicker.classList.add('color-picker');
-        colorPicker.addEventListener('input', function () {
-            img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
-        });
-
         container.appendChild(img);
-        container.appendChild(colorPicker);
         return container;
     }
 
     // Fonction pour charger la galerie d'images
     function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
-        let selectedTexture = null; // Réinitialiser la sélection pour cet élément
+        selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         for (let i = 1; i <= 5; i++) {
             const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
@@ -84,15 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 img.alt = `${textureType} Image ${i}`;
                 img.classList.add('image-option');
 
-                const colorPicker = document.createElement('input');
-                colorPicker.type = 'color';
-                colorPicker.classList.add('color-picker');
-                colorPicker.addEventListener('input', function () {
-                    img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
-                });
-
                 imageContainer.appendChild(img);
-                imageContainer.appendChild(colorPicker);
             }
 
             // Ajouter un événement de clic pour sélectionner une texture
@@ -107,71 +96,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Enregistrer la texture sélectionnée
                 selectedTextures[textureType] = imgSrc;
 
-                // Charger les images associées si nécessaire
-                if (textureType === 'potion' || textureType === 'paladium_bow' || textureType === 'armure_paladium') {
-                    loadAssociatedImages(textureType, resolution, i);
-                } else {
-                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                    if (currentTextureIndex < textureSequence.length - 1) {
-                        currentTextureIndex++; // Incrémenter l'index
-                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                    } else {
-                        step2Section.style.display = 'none';
-                        step3Section.style.display = 'block';
-                    }
-                }
+                // Afficher le modal de personnalisation
+                customImage.src = imgSrc;
+                imageCustomizationModal.style.display = 'block';
             });
 
             imageGallery.appendChild(imageContainer);
         }
     }
 
-    // Fonction pour charger les images associées
-    function loadAssociatedImages(textureType, resolution, index) {
-        const associatedImages = {
-            'potion': ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'],
-            'paladium_bow': ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'],
-            'armure_paladium': [
-                'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
-                'paladium_armor_1.png', 'paladium_armor_2.png',
-                'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png',
-                'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
-            ]
-        };
+    // Fermer le modal de personnalisation
+    closeModal.addEventListener('click', function () {
+        imageCustomizationModal.style.display = 'none';
+    });
 
-        const images = associatedImages[textureType];
-        images.forEach(image => {
-            const img = document.createElement('img');
-            if (textureType === 'potion') {
-                img.src = `textures/${resolution}/potion/potion${index}/${image}`;
-            } else if (textureType === 'paladium_bow') {
-                img.src = `textures/${resolution}/paladium_bow/paladium_bow${index}/${image}`;
-            } else if (textureType === 'armure_paladium') {
-                img.src = `textures/${resolution}/armure_paladium/armure_paladium${index}/${image}`;
-            }
-            img.alt = `${textureType} ${image}`;
-            img.classList.add('image-option');
-            imageGallery.appendChild(img);
-        });
+    // Confirmer la personnalisation et passer à l'étape suivante
+    confirmCustomizationButton.addEventListener('click', function () {
+        imageCustomizationModal.style.display = 'none';
 
-        // Incrémenter l'index pour le type de texture
-        if (textureType === 'potion') {
-            potionIndex = index;
-        } else if (textureType === 'paladium_bow') {
-            paladiumBowIndex = index;
-        } else if (textureType === 'armure_paladium') {
-            armurePaladiumIndex = index;
+        // Appliquer la teinte de couleur à l'image sélectionnée
+        if (selectedTexture) {
+            const img = selectedTexture.querySelector('img');
+            img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
         }
 
         // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
         if (currentTextureIndex < textureSequence.length - 1) {
             currentTextureIndex++; // Incrémenter l'index
-            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+            loadImageGallery(selectedResolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
         } else {
             step2Section.style.display = 'none';
             step3Section.style.display = 'block';
         }
-    }
+    });
 
     // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
