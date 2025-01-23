@@ -243,8 +243,8 @@ h3 {
 /* Styles for zoomed icon images in top-left corner */
 .zoomed-icon-container {
     position: relative;
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
+    width: 60px; /* Adjust the width as needed */
+    height: 60px; /* Adjust the height as needed */
     overflow: hidden;
 }
 
@@ -252,11 +252,17 @@ h3 {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(3); /* Increase the scale for more zoom */
+    transform: scale(4); /* Increase the scale for more zoom */
     transform-origin: top left;
 }
 
 /* Remove hover animation for icons */
 .zoomed-icon-container:hover .zoomed-icon {
-    transform: scale(3); /* Ensure the scale remains the same on hover */
+    transform: scale(4); /* Ensure the scale remains the same on hover */
+}
+
+/* New animation that does nothing when hovering over images */
+.image-option:hover {
+    transform: none; /* Disable the transform animation */
+    border: 3px solid transparent; /* Keep the border transparent */
 }
