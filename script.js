@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armurepaladium${Math.min(i + 1, 5)}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${Math.min(i + 1, 5)}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
