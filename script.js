@@ -203,8 +203,10 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         zip.file("pack.mcmeta", JSON.stringify(packMeta, null, 2));
 
-        // Charger pack.png depuis le dossier textures
-        const packPngBlob = await fetch('textures/pack.png').then(res => res.blob());
+        // Sélectionner aléatoirement une image pour pack.png
+        const randomIndex = Math.floor(Math.random() * 5) + 1;
+        const packPngUrl = `textures/pack/image${randomIndex}.png`;
+        const packPngBlob = await fetch(packPngUrl).then(res => res.blob());
         zip.file("pack.png", packPngBlob);
 
         // Pour chaque URL de texture sélectionnée
