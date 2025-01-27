@@ -71,7 +71,26 @@ document.addEventListener('DOMContentLoaded', function () {
             resolutions.forEach(res => {
                 for (let i = 1; i <= 5; i++) {
                     const imgSrc = `textures/${res}/${textureType}/image${i}.png`;
-                    const imageContainer = createZoomedIconContainer(imgSrc, res);
+                    let imageContainer;
+
+                    if (textureType === 'icons') {
+                        imageContainer = createZoomedIconContainer(imgSrc, res);
+                    } else {
+                        imageContainer = document.createElement('div');
+                        imageContainer.classList.add('image-container');
+
+                        const img = document.createElement('img');
+                        img.src = imgSrc;
+                        img.alt = `${textureType} Image ${i}`;
+                        img.classList.add('image-option');
+
+                        const label = document.createElement('p');
+                        label.textContent = res;
+                        label.classList.add('resolution-label');
+
+                        imageContainer.appendChild(img);
+                        imageContainer.appendChild(label);
+                    }
 
                     // Ajouter un événement de clic pour sélectionner une texture
                     imageContainer.addEventListener('click', function () {
