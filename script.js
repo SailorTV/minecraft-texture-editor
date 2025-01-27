@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 
         'armure_paladium', 'paladium_sword', 'paladium_green_sword', 'icons'
     ]; // Séquence de textures
+    const resolutions = ['8x8', '16x16', '32x32', '64x64', '128x128', '256x256'];
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
     let selectedResolution = ''; // Ajouter cette ligne pour stocker la résolution sélectionnée
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Fonction pour créer un conteneur d'icône zoomée
-    function createZoomedIconContainer(src) {
+    function createZoomedIconContainer(src, resolution) {
         const container = document.createElement('div');
         container.classList.add('zoomed-icon-container');
 
@@ -52,7 +53,12 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = src;
         img.classList.add('zoomed-icon');
 
+        const label = document.createElement('p');
+        label.textContent = resolution;
+        label.classList.add('resolution-label');
+
         container.appendChild(img);
+        container.appendChild(label);
         return container;
     }
 
@@ -61,47 +67,85 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        for (let i = 1; i <= 5; i++) {
-            const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
-            let imageContainer;
+        if (resolution === 'tout') {
+            resolutions.forEach(res => {
+                for (let i = 1; i <= 5; i++) {
+                    const imgSrc = `textures/${res}/${textureType}/image${i}.png`;
+                    const imageContainer = createZoomedIconContainer(imgSrc, res);
 
-            if (textureType === 'icons') {
-                imageContainer = createZoomedIconContainer(imgSrc);
-            } else {
-                imageContainer = document.createElement('div');
-                imageContainer.classList.add('image-container');
+                    // Ajouter un événement de clic pour sélectionner une texture
+                    imageContainer.addEventListener('click', function () {
+                        if (selectedTexture) {
+                            selectedTexture.classList.remove('selected');
+                        }
 
-                const img = document.createElement('img');
-                img.src = imgSrc;
-                img.alt = `${textureType} Image ${i}`;
-                img.classList.add('image-option');
+                        imageContainer.classList.add('selected');
+                        selectedTexture = imageContainer;
 
-                imageContainer.appendChild(img);
-            }
+                        // Enregistrer la texture sélectionnée
+                        selectedTextures[textureType] = imgSrc;
 
-            // Ajouter un événement de clic pour sélectionner une texture
-            imageContainer.addEventListener('click', function () {
-                if (selectedTexture) {
-                    selectedTexture.classList.remove('selected');
-                }
+                        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                        if (currentTextureIndex < textureSequence.length - 1) {
+                            currentTextureIndex++; // Incrémenter l'index
+                            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                        } else {
+                            step2Section.style.display = 'none';
+                            step3Section.style.display = 'block';
+                        }
+                    });
 
-                imageContainer.classList.add('selected');
-                selectedTexture = imageContainer;
-
-                // Enregistrer la texture sélectionnée
-                selectedTextures[textureType] = imgSrc;
-
-                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                if (currentTextureIndex < textureSequence.length - 1) {
-                    currentTextureIndex++; // Incrémenter l'index
-                    loadImageGallery(selectedResolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                } else {
-                    step2Section.style.display = 'none';
-                    step3Section.style.display = 'block';
+                    imageGallery.appendChild(imageContainer);
                 }
             });
+        } else {
+            for (let i = 1; i <= 5; i++) {
+                const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
+                let imageContainer;
 
-            imageGallery.appendChild(imageContainer);
+                if (textureType === 'icons') {
+                    imageContainer = createZoomedIconContainer(imgSrc, resolution);
+                } else {
+                    imageContainer = document.createElement('div');
+                    imageContainer.classList.add('image-container');
+
+                    const img = document.createElement('img');
+                    img.src = imgSrc;
+                    img.alt = `${textureType} Image ${i}`;
+                    img.classList.add('image-option');
+
+                    const label = document.createElement('p');
+                    label.textContent = resolution;
+                    label.classList.add('resolution-label');
+
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(label);
+                }
+
+                // Ajouter un événement de clic pour sélectionner une texture
+                imageContainer.addEventListener('click', function () {
+                    if (selectedTexture) {
+                        selectedTexture.classList.remove('selected');
+                    }
+
+                    imageContainer.classList.add('selected');
+                    selectedTexture = imageContainer;
+
+                    // Enregistrer la texture sélectionnée
+                    selectedTextures[textureType] = imgSrc;
+
+                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                    if (currentTextureIndex < textureSequence.length - 1) {
+                        currentTextureIndex++; // Incrémenter l'index
+                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                    } else {
+                        step2Section.style.display = 'none';
+                        step3Section.style.display = 'block';
+                    }
+                });
+
+                imageGallery.appendChild(imageContainer);
+            }
         }
     }
 
