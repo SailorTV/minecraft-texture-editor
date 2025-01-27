@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Fonction pour créer un conteneur d'icône zoomée
-    function createZoomedIconContainer(src, resolution) {
+    function createZoomedIconContainer(src) {
         const container = document.createElement('div');
         container.classList.add('zoomed-icon-container');
 
@@ -53,12 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = src;
         img.classList.add('zoomed-icon');
 
-        const label = document.createElement('p');
-        label.textContent = resolution;
-        label.classList.add('resolution-label');
-
         container.appendChild(img);
-        container.appendChild(label);
         return container;
     }
 
@@ -74,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     let imageContainer;
 
                     if (textureType === 'icons') {
-                        imageContainer = createZoomedIconContainer(imgSrc, res);
+                        imageContainer = createZoomedIconContainer(imgSrc);
                     } else {
                         imageContainer = document.createElement('div');
                         imageContainer.classList.add('image-container');
@@ -123,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let imageContainer;
 
                 if (textureType === 'icons') {
-                    imageContainer = createZoomedIconContainer(imgSrc, resolution);
+                    imageContainer = createZoomedIconContainer(imgSrc);
                 } else {
                     imageContainer = document.createElement('div');
                     imageContainer.classList.add('image-container');
@@ -133,12 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     img.alt = `${textureType} Image ${i}`;
                     img.classList.add('image-option');
 
-                    const label = document.createElement('p');
-                    label.textContent = resolution;
-                    label.classList.add('resolution-label');
-
                     imageContainer.appendChild(img);
-                    imageContainer.appendChild(label);
                 }
 
                 // Ajouter un événement de clic pour sélectionner une texture
