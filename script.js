@@ -9,10 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const packNameInput = document.getElementById('packNameInput');
     const confirmPackNameButton = document.getElementById('confirmPackNameButton');
     const closeModal = document.querySelector('.modal .close');
-    const imageCustomizationModal = document.getElementById('imageCustomizationModal');
-    const customImage = document.getElementById('customImage');
-    const colorPicker = document.getElementById('colorPicker');
-    const confirmCustomizationButton = document.getElementById('confirmCustomizationButton');
     let packName = '';
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
@@ -22,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentTextureIndex = 0;
     let selectedTextures = {}; // Stocke les textures sélectionnées pour chaque élément
     let selectedResolution = ''; // Ajouter cette ligne pour stocker la résolution sélectionnée
-    let selectedTexture = null; // Stocke la texture sélectionnée pour personnalisation
 
     // Indices indépendants pour chaque type de texture nécessitant des images associées
     let potionIndex = 1;
@@ -64,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fonction pour charger la galerie d'images
     function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
-        selectedTexture = null; // Réinitialiser la sélection pour cet élément
+        let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         for (let i = 1; i <= 5; i++) {
             const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
@@ -96,39 +91,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Enregistrer la texture sélectionnée
                 selectedTextures[textureType] = imgSrc;
 
-                // Afficher le modal de personnalisation
-                customImage.src = imgSrc;
-                imageCustomizationModal.style.display = 'block';
+                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                if (currentTextureIndex < textureSequence.length - 1) {
+                    currentTextureIndex++; // Incrémenter l'index
+                    loadImageGallery(selectedResolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                } else {
+                    step2Section.style.display = 'none';
+                    step3Section.style.display = 'block';
+                }
             });
 
             imageGallery.appendChild(imageContainer);
         }
     }
-
-    // Fermer le modal de personnalisation
-    closeModal.addEventListener('click', function () {
-        imageCustomizationModal.style.display = 'none';
-    });
-
-    // Confirmer la personnalisation et passer à l'étape suivante
-    confirmCustomizationButton.addEventListener('click', function () {
-        imageCustomizationModal.style.display = 'none';
-
-        // Appliquer la teinte de couleur à l'image sélectionnée
-        if (selectedTexture) {
-            const img = selectedTexture.querySelector('img');
-            img.style.filter = `hue-rotate(${colorPicker.value}deg)`;
-        }
-
-        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-        if (currentTextureIndex < textureSequence.length - 1) {
-            currentTextureIndex++; // Incrémenter l'index
-            loadImageGallery(selectedResolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-        } else {
-            step2Section.style.display = 'none';
-            step3Section.style.display = 'block';
-        }
-    });
 
     // Téléchargement du pack de textures
     downloadButton.addEventListener('click', function () {
@@ -309,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Image téléchargée avec succès: ${imageUrl}`);
             return await response.blob();
         } catch (error) {
-            console.error(`Erreur  de téléchargement pour l'image ${imageUrl}: ${error}`);
+            console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
             return null;
         }
     }
