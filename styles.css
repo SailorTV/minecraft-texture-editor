@@ -252,7 +252,7 @@ h3 {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(9); /* Increase the scale for more zoom */
+    transform: scale(9); /* Ensure consistent zoom level */
     transform-origin: top left;
 }
 
