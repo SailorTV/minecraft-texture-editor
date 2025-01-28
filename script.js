@@ -61,8 +61,13 @@ document.addEventListener('DOMContentLoaded', function () {
     async function imageExists(url) {
         try {
             const response = await fetch(url, { method: 'HEAD' });
-            return response.ok;
+            if (!response.ok) {
+                console.log(`Image not found: ${url}`);
+                return false;
+            }
+            return true;
         } catch (error) {
+            console.log(`Error checking image: ${url}`);
             return false;
         }
     }
