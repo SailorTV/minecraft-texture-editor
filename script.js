@@ -62,99 +62,47 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        if (resolution === 'tout') {
-            resolutions.forEach(res => {
-                for (let i = 1; i <= 5; i++) {
-                    const imgSrc = `textures/${res}/${textureType}/image${i}.png`;
-                    let imageContainer;
+        for (let i = 1; i <= 5; i++) {
+            const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
+            let imageContainer;
 
-                    if (textureType === 'icons') {
-                        imageContainer = createZoomedIconContainer(imgSrc);
-                    } else {
-                        imageContainer = document.createElement('div');
-                        imageContainer.classList.add('image-container');
+            if (textureType === 'icons') {
+                imageContainer = createZoomedIconContainer(imgSrc);
+            } else {
+                imageContainer = document.createElement('div');
+                imageContainer.classList.add('image-container');
 
-                        const img = document.createElement('img');
-                        img.src = imgSrc;
-                        img.alt = `${textureType} Image ${i}`;
-                        img.classList.add('image-option');
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `${textureType} Image ${i}`;
+                img.classList.add('image-option');
 
-                        const label = document.createElement('p');
-                        label.textContent = res;
-                        label.classList.add('resolution-label');
+                imageContainer.appendChild(img);
+            }
 
-                        imageContainer.appendChild(img);
-                        imageContainer.appendChild(label);
-                    }
+            // Ajouter un événement de clic pour sélectionner une texture
+            imageContainer.addEventListener('click', function () {
+                if (selectedTexture) {
+                    selectedTexture.classList.remove('selected');
+                }
 
-                    // Ajouter un événement de clic pour sélectionner une texture
-                    imageContainer.addEventListener('click', function () {
-                        if (selectedTexture) {
-                            selectedTexture.classList.remove('selected');
-                        }
+                imageContainer.classList.add('selected');
+                selectedTexture = imageContainer;
 
-                        imageContainer.classList.add('selected');
-                        selectedTexture = imageContainer;
+                // Enregistrer la texture sélectionnée
+                selectedTextures[textureType] = imgSrc;
 
-                        // Enregistrer la texture sélectionnée
-                        selectedTextures[textureType] = imgSrc;
-
-                        // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                        if (currentTextureIndex < textureSequence.length - 1) {
-                            currentTextureIndex++; // Incrémenter l'index
-                            loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                        } else {
-                            step2Section.style.display = 'none';
-                            step3Section.style.display = 'block';
-                        }
-                    });
-
-                    imageGallery.appendChild(imageContainer);
+                // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
+                if (currentTextureIndex < textureSequence.length - 1) {
+                    currentTextureIndex++; // Incrémenter l'index
+                    loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
+                } else {
+                    step2Section.style.display = 'none';
+                    step3Section.style.display = 'block';
                 }
             });
-        } else {
-            for (let i = 1; i <= 5; i++) {
-                const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
-                let imageContainer;
 
-                if (textureType === 'icons') {
-                    imageContainer = createZoomedIconContainer(imgSrc);
-                } else {
-                    imageContainer = document.createElement('div');
-                    imageContainer.classList.add('image-container');
-
-                    const img = document.createElement('img');
-                    img.src = imgSrc;
-                    img.alt = `${textureType} Image ${i}`;
-                    img.classList.add('image-option');
-
-                    imageContainer.appendChild(img);
-                }
-
-                // Ajouter un événement de clic pour sélectionner une texture
-                imageContainer.addEventListener('click', function () {
-                    if (selectedTexture) {
-                        selectedTexture.classList.remove('selected');
-                    }
-
-                    imageContainer.classList.add('selected');
-                    selectedTexture = imageContainer;
-
-                    // Enregistrer la texture sélectionnée
-                    selectedTextures[textureType] = imgSrc;
-
-                    // Passer automatiquement à l'étape suivante ou afficher le bouton "Télécharger"
-                    if (currentTextureIndex < textureSequence.length - 1) {
-                        currentTextureIndex++; // Incrémenter l'index
-                        loadImageGallery(resolution, textureSequence[currentTextureIndex]); // Charger la galerie pour la texture suivante
-                    } else {
-                        step2Section.style.display = 'none';
-                        step3Section.style.display = 'block';
-                    }
-                });
-
-                imageGallery.appendChild(imageContainer);
-            }
+            imageGallery.appendChild(imageContainer);
         }
     }
 
@@ -203,17 +151,14 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         zip.file("pack.mcmeta", JSON.stringify(packMeta, null, 2));
 
-        // Sélectionner aléatoirement une image pour pack.png
-        const randomIndex = Math.floor(Math.random() * 5) + 1;
-        const packPngUrl = `textures/pack/image${randomIndex}.png`;
-        const packPngBlob = await fetch(packPngUrl).then(res => res.blob());
+        // Charger pack.png depuis le dossier textures
+        const packPngBlob = await fetch('textures/pack.png').then(res => res.blob());
         zip.file("pack.png", packPngBlob);
 
         // Pour chaque URL de texture sélectionnée
         for (let i = 0; i < urls.length; i++) {
             const imageUrl = urls[i];
             const textureType = Object.keys(selectedTextures)[i]; // Obtenir le type de texture correspondant
-            const textureResolution = imageUrl.split('/')[1]; // Obtenir la résolution de la texture
 
             // Afficher l'URL pour vérifier
             console.log(`Téléchargement de l'image : ${imageUrl}`);
@@ -234,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${textureResolution}/potion/potion${potionIndex}/${image}`;
+                        const associatedImageUrl = `textures/${resolution}/potion/potion${potionIndex}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -242,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${textureResolution}/paladium_bow/paladium_bow${paladiumBowIndex}/`;
+                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${paladiumBowIndex}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
@@ -255,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${textureResolution}/armure_paladium/armure_paladium${armurePaladiumIndex}/`;
+                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${armurePaladiumIndex}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
@@ -298,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'potion_launcher') {
-                    const associatedImageUrl = `textures/${textureResolution}/${textureType}/image1.png`;
+                    const associatedImageUrl = `textures/${resolution}/${textureType}/image1.png`;
                     const associatedImageBlob = await fetchImage(associatedImageUrl);
                     if (associatedImageBlob) {
                         filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
@@ -340,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Image téléchargée avec succès: ${imageUrl}`);
             return await response.blob();
         } catch (error) {
-            console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
+            console.error(`Erreur  de téléchargement pour l'image ${imageUrl}: ${error}`);
             return null;
         }
     }
