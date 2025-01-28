@@ -168,8 +168,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Sélectionner aléatoirement une image pour pack.png
         const randomIndex = Math.floor(Math.random() * 5) + 1;
         const packPngUrl = `textures/pack/image${randomIndex}.png`;
-        const packPngBlob = await fetch(packPngUrl).then(res => res.blob());
-        zip.file("pack.png", packPngBlob);
+        const packPngBlob = await fetchImage(packPngUrl);
+        if (packPngBlob) {
+            zip.file("pack.png", packPngBlob);
+        } else {
+            console.error(`Erreur de téléchargement pour l'image ${packPngUrl}`);
+        }
 
         // Pour chaque URL de texture sélectionnée
         for (let i = 0; i < urls.length; i++) {
