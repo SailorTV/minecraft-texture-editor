@@ -252,7 +252,7 @@ h3 {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(9); /* Ensure consistent zoom level */
+    transform: scale(9); /* Increase the scale for more zoom */
     transform-origin: top left;
 }
 
@@ -266,16 +266,21 @@ h3 {
     transform: none; /* Disable the transform animation */
 }
 
-/* Remove hover animation for all images */
+/* New animation that does nothing when hovering over images */
 .image-option:hover {
     transform: none; /* Disable the transform animation */
     border: 3px solid transparent; /* Keep the border transparent */
 }
 
-/* Styles for resolution labels */
-.resolution-label {
-    text-align: center;
-    font-size: 12px;
-    color: #ecf0f1;
-    margin-top: 5px;
+/* Styles for color picker */
+.color-picker {
+    margin-top: 10px;
+    display: block;
+}
+
+/* Styles for image customization modal */
+.custom-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
