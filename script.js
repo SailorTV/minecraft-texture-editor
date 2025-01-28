@@ -61,13 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
     async function imageExists(url) {
         try {
             const response = await fetch(url, { method: 'HEAD' });
-            if (!response.ok) {
-                console.log(`Image not found: ${url}`);
-                return false;
-            }
-            return true;
+            return response.ok;
         } catch (error) {
-            console.log(`Error checking image: ${url}`);
             return false;
         }
     }
@@ -176,8 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const packPngBlob = await fetchImage(packPngUrl);
         if (packPngBlob) {
             zip.file("pack.png", packPngBlob);
-        } else {
-            console.error(`Erreur de téléchargement pour l'image ${packPngUrl}`);
         }
 
         // Pour chaque URL de texture sélectionnée
@@ -185,16 +178,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const imageUrl = urls[i];
             const textureType = Object.keys(selectedTextures)[i]; // Obtenir le type de texture correspondant
 
-            // Afficher l'URL pour vérifier
-            console.log(`Téléchargement de l'image : ${imageUrl}`);
-            
             // Créer un objet FileReader pour lire l'image
             const imageBlob = await fetchImage(imageUrl);
             
             if (imageBlob) {
-                console.log(`Ajout de l'image ${imageUrl} au ZIP`);
-                console.log(imageBlob); // Log the imageBlob to debug the issue
-                
                 // Déterminer le chemin du fichier dans le ZIP
                 let filePath;
                 if (textureType === 'potion') {
@@ -220,8 +207,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/weapons/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
@@ -241,8 +226,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/items/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
                     for (const file of modelFiles) {
@@ -251,8 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (fileBlob) {
                             const filePath = `assets/palamod/textures/models/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
-                        } else {
-                            console.error(`Erreur avec l'image ${fileUrl}`);
                         }
                     }
                 } else if (textureType === 'icons') {
@@ -278,15 +259,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 }
-
-                console.log(`Chemin d'accès du fichier ajouté au ZIP : ${filePath}`);
-            } else {
-                console.error(`Erreur avec l'image ${imageUrl}`);
             }
         }
 
         // Vérifier si des fichiers ont été ajoutés au ZIP
-        console.log('Fichiers ajoutés au ZIP:', Object.keys(zip.files));
         if (Object.keys(zip.files).length === 0) {
             alert('Erreur : Aucun fichier n a été ajouté au ZIP.');
             return;
@@ -306,11 +282,9 @@ document.addEventListener('DOMContentLoaded', function () {
     async function fetchImage(imageUrl) {
         try {
             const response = await fetch(imageUrl);
-            if (!response.ok) throw new Error(`Erreur de téléchargement: ${imageUrl}`);
-            console.log(`Image téléchargée avec succès: ${imageUrl}`);
+            if (!response.ok) return null;
             return await response.blob();
         } catch (error) {
-            console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
             return null;
         }
     }
