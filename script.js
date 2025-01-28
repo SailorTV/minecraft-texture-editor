@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (textureType === 'outils') {
             let i = 1;
             while (true) {
-                const imgSrc = `textures/res/outils/image${i}.png`;
+                const imgSrc = `textures/${resolution}/outils/image${i}.png`;
                 if (!(await imageExists(imgSrc))) break;
 
                 const imageContainer = document.createElement('div');
