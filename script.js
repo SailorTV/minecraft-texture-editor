@@ -57,13 +57,26 @@ document.addEventListener('DOMContentLoaded', function () {
         return container;
     }
 
+    // Fonction pour vérifier l'existence d'une image
+    async function imageExists(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok;
+        } catch (error) {
+            return false;
+        }
+    }
+
     // Fonction pour charger la galerie d'images
-    function loadImageGallery(resolution, textureType) {
+    async function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        for (let i = 1; i <= 5; i++) {
+        let i = 1;
+        while (true) {
             const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
+            if (!(await imageExists(imgSrc))) break;
+
             let imageContainer;
 
             if (textureType === 'icons') {
@@ -103,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             imageGallery.appendChild(imageContainer);
+            i++;
         }
     }
 
