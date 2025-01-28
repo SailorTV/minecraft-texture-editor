@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const textureSequence = [
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 
-        'armure_paladium', 'paladium_sword', 'paladium_green_sword', 'icons'
+        'armure_paladium', 'paladium_sword', 'paladium_green_sword', 'icons',
+        'paladium_pickaxe'
     ]; // Séquence de textures
     const resolutions = ['8x8', '16x16', '32x32', '64x64', '128x128', '256x256'];
     let currentTextureIndex = 0;
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let potionIndex = 1;
     let paladiumBowIndex = 1;
     let armurePaladiumIndex = 1;
+    let outilsIndex = 1;
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -254,6 +256,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (associatedImageBlob) {
                         filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
                         zip.file(filePath, associatedImageBlob, { binary: true });
+                    }
+                } else if (textureType === 'paladium_pickaxe') {
+                    const folderPath = `textures/${resolution}/outils/outils${outilsIndex}/`;
+                    const files = ['paladium_pickaxe.png', 'paladium_shovel.png', 'paladium_axe.png', 'amethyst_axe.png', 'amethyst_pickaxe.png', 'amethyst_shovel.png', 'titane_axe.png', 'titane_shovel.png', 'titane_pickaxe.png'];
+                    for (const file of files) {
+                        const fileUrl = `${folderPath}${file}`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/items/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        }
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
