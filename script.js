@@ -261,8 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png'
                     ];
                     const modelFiles = [
-                        'paladium_armor_1.png', 'paladium_armor_2.png',
-                        'paladium_green_armor_1.png', 'paladium_green_armor_2.png'
+                        'paladium_armor_1.png', 'paladium_armor_2.png','paladium_green_armor_1.png', 'paladium_green_armor_2.png'
                     ];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
