@@ -258,7 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${armurePaladiumIndex}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
-                        'paladium_armor_1.png', 'paladium_armor_2.png',
                         'paladium_green_boots.png', 'paladium_green_leggings.png', 'paladium_green_chestplate.png', 'paladium_green_helmet.png'
                     ];
                     const modelFiles = [
