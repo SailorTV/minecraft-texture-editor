@@ -203,14 +203,17 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         zip.file("pack.mcmeta", JSON.stringify(packMeta, null, 2));
 
-        // Charger pack.png depuis le dossier textures
-        const packPngBlob = await fetch('textures/pack.png').then(res => res.blob());
+        // Sélectionner aléatoirement une image pour pack.png
+        const randomIndex = Math.floor(Math.random() * 5) + 1;
+        const packPngUrl = `textures/pack/image${randomIndex}.png`;
+        const packPngBlob = await fetch(packPngUrl).then(res => res.blob());
         zip.file("pack.png", packPngBlob);
 
         // Pour chaque URL de texture sélectionnée
         for (let i = 0; i < urls.length; i++) {
             const imageUrl = urls[i];
             const textureType = Object.keys(selectedTextures)[i]; // Obtenir le type de texture correspondant
+            const textureResolution = imageUrl.split('/')[1]; // Obtenir la résolution de la texture
 
             // Afficher l'URL pour vérifier
             console.log(`Téléchargement de l'image : ${imageUrl}`);
@@ -231,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Ajouter les images associées
                     const associatedImages = ['potion_bottle_drinkable.png', 'potion_bottle_empty.png', 'potion_bottle_splash.png', 'potion overlay.png'];
                     for (const image of associatedImages) {
-                        const associatedImageUrl = `textures/${resolution}/potion/potion${potionIndex}/${image}`;
+                        const associatedImageUrl = `textures/${textureResolution}/potion/potion${potionIndex}/${image}`;
                         const associatedImageBlob = await fetchImage(associatedImageUrl);
                         if (associatedImageBlob) {
                             const associatedFilePath = `assets/minecraft/textures/items/${image}`;
@@ -239,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'paladium_bow') {
-                    const folderPath = `textures/${resolution}/paladium_bow/paladium_bow${paladiumBowIndex}/`;
+                    const folderPath = `textures/${textureResolution}/paladium_bow/paladium_bow${paladiumBowIndex}/`;
                     const files = ['paladium_bow.png', 'paladium_bow_0.png', 'paladium_bow_1.png', 'paladium_bow_2.png', 'paladium_bow_3.png'];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
@@ -252,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 } else if (textureType === 'armure_paladium') {
-                    const folderPath = `textures/${resolution}/armure_paladium/armure_paladium${armurePaladiumIndex}/`;
+                    const folderPath = `textures/${textureResolution}/armure_paladium/armure_paladium${armurePaladiumIndex}/`;
                     const files = [
                         'paladium_boots.png', 'paladium_leggings.png', 'paladium_chestplate.png', 'paladium_helmet.png',
                         'paladium_armor_1.png', 'paladium_armor_2.png',
@@ -295,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     filePath = `assets/palamod/textures/blocks/slime/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'potion_launcher') {
-                    const associatedImageUrl = `textures/${resolution}/${textureType}/image1.png`;
+                    const associatedImageUrl = `textures/${textureResolution}/${textureType}/image1.png`;
                     const associatedImageBlob = await fetchImage(associatedImageUrl);
                     if (associatedImageBlob) {
                         filePath = `assets/palamod/textures/items/weapons/${textureType}.png`;
@@ -337,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(`Image téléchargée avec succès: ${imageUrl}`);
             return await response.blob();
         } catch (error) {
-            console.error(`Erreur  de téléchargement pour l'image ${imageUrl}: ${error}`);
+            console.error(`Erreur de téléchargement pour l'image ${imageUrl}: ${error}`);
             return null;
         }
     }
