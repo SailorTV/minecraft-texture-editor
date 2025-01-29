@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let i = 1;
         while (true) {
-            const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
+            const imgSrc = `textures/${resolution}/${textureType}/${textureType === 'particles' ? 'particles' + i : 'image' + i}.png`;
             if (!(await imageExists(imgSrc))) break;
 
             let imageContainer;
