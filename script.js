@@ -57,7 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
         img.classList.add('zoomed-icon');
 
         if (isParticles) {
-            img.style.transform = 'none';
+            img.style.transform = 'scale(9)';
+            img.style.transformOrigin = 'left';
         } else {
             img.style.transform = 'scale(9)';
             img.style.transformOrigin = 'top left';
@@ -81,6 +82,11 @@ document.addEventListener('DOMContentLoaded', function () {
     async function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
+
+        // Ajouter le nom de l'élément en cours
+        const itemName = document.createElement('h3');
+        itemName.textContent = `Sélectionnez une texture pour : ${textureType}`;
+        imageGallery.appendChild(itemName);
 
         let i = 1;
         while (true) {
