@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const fileUrl = `${folderPath}${file}`;
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
-                            const filePath = `assets/palamod/textures/blocks/pillage/effect/${file}`;
+                            const filePath = `assets/palamod/textures/blocks/pillage/effects/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         }
                     }
