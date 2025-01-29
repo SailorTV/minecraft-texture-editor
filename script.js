@@ -57,10 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         img.classList.add('zoomed-icon');
 
         if (isParticles) {
-            img.style.transform = 'scale(9)';
-            img.style.transformOrigin = 'left top';
-            img.style.left = '-20px';
-            img.style.top = '-10px';
+            img.style.transform = 'none';
         } else {
             img.style.transform = 'scale(9)';
             img.style.transformOrigin = 'top left';

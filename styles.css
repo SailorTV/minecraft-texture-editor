@@ -120,7 +120,6 @@ button:hover {
 }
 
 #texturesGallery img:hover {
-    border: 5px solid #e67e22;
     transform: scale(1.1);
 }
 
