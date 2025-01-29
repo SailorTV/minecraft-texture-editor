@@ -81,12 +81,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fonction pour charger la galerie d'images
     async function loadImageGallery(resolution, textureType) {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
-        let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         // Ajouter le nom de l'élément en cours
         const itemName = document.createElement('h3');
         itemName.textContent = `Sélectionnez une texture pour : ${textureType}`;
         imageGallery.appendChild(itemName);
+
+        let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
         let i = 1;
         while (true) {
