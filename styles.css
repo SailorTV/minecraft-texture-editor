@@ -72,6 +72,7 @@ button {
 button:hover {
     background-color: #d35400;
     transform: scale(1.05);
+    border-radius: 5px;
 }
 
 /* Options de résolution */

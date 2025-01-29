@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajouter le nom de l'élément en cours
         const itemName = document.createElement('h3');
         itemName.textContent = `Sélectionnez une texture pour : ${textureType}`;
-        imageGallery.appendChild(itemName);
+        step2Section.insertBefore(itemName, imageGallery);
 
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
