@@ -312,12 +312,20 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 } else if (textureType === 'pillage') {
                     const folderPath = `textures/${resolution}/pillage/pillage${pillageIndex}/`;
-                    const files = await fetchFolderFiles(folderPath);
+                    const files = [
+                        'big_obsi.png', 'boom_obsi_bottom.png', 'boom_obsi_side.png', 'boom_obsi_top.png', 'fake_obsi.png',
+                        'lava_obsi.png', 'mega_boom_obsi_bottom.png', 'mega_boom_obsi_side.png', 'mega_boom_obsi_top.png',
+                        'poison_obsi.png', 'redstone_obsi_bottom.png', 'redstone_obsi_bottom_off.png', 'redstone_obsi_side.png',
+                        'redstone_obsi_side_off.png', 'redstone_obsi_top.png', 'slime_obsi.png', 'slime_obsi_front.png',
+                        'spike_obsi.png', 'spike_obsi_1.png', 'spike_obsi_1_front.png', 'spike_obsi_2.png', 'spike_obsi_2_front.png',
+                        'spike_obsi_3.png', 'spike_obsi_3_front.png', 'spike_obsi_4.png', 'spike_obsi_4_front.png', 'spike_obsi_5.png',
+                        'spike_obsi_5_front.png', 'spike_obsi_6.png', 'spike_obsi_6_front.png', 'spike_obsi_front.png', 'wither_obsi.png'
+                    ];
                     for (const file of files) {
                         const fileUrl = `${folderPath}${file}`;
                         const fileBlob = await fetchImage(fileUrl);
                         if (fileBlob) {
-                            const filePath = `assets/palamod/textures/blocks/pillage/effects/${file}`;
+                            const filePath = `assets/palamod/textures/blocks/pillage/effect/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         }
                     }
