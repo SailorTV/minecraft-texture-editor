@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 
         'armure_paladium', 'paladium_sword', 'paladium_green_sword', 'icons',
-        'outils'
+        'outils', 'pillage'
     ]; // Séquence de textures
     const resolutions = ['8x8', '16x16', '32x32', '64x64', '128x128', '256x256'];
     let currentTextureIndex = 0;
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let paladiumBowIndex = 1;
     let armurePaladiumIndex = 1;
     let outilsIndex = 1;
+    let pillageIndex = 1;
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -74,10 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        if (textureType === 'outils') {
+        if (textureType === 'outils' || textureType === 'pillage') {
             let i = 1;
             while (true) {
-                const imgSrc = `textures/${resolution}/outils/image${i}.png`;
+                const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
                 if (!(await imageExists(imgSrc))) break;
 
                 const imageContainer = document.createElement('div');
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const img = document.createElement('img');
                 img.src = imgSrc;
-                img.alt = `outils Image ${i}`;
+                img.alt = `${textureType} Image ${i}`;
                 img.classList.add('image-option');
 
                 imageContainer.appendChild(img);
@@ -309,6 +310,17 @@ document.addEventListener('DOMContentLoaded', function () {
                             zip.file(filePath, fileBlob, { binary: true });
                         }
                     }
+                } else if (textureType === 'pillage') {
+                    const folderPath = `textures/${resolution}/pillage/pillage${pillageIndex}/`;
+                    const files = await fetchFolderFiles(folderPath);
+                    for (const file of files) {
+                        const fileUrl = `${folderPath}${file}`;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/palamod/textures/blocks/pillage/effect/${file}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        }
+                    }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
@@ -340,6 +352,21 @@ document.addEventListener('DOMContentLoaded', function () {
             return await response.blob();
         } catch (error) {
             return null;
+        }
+    }
+
+    // Fonction pour récupérer tous les fichiers dans un dossier
+    async function fetchFolderFiles(folderUrl) {
+        try {
+            const response = await fetch(folderUrl);
+            if (!response.ok) return [];
+            const text = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const links = Array.from(doc.querySelectorAll('a'));
+            return links.map(link => link.getAttribute('href')).filter(href => href && !href.endsWith('/'));
+        } catch (error) {
+            return [];
         }
     }
 });
