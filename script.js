@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'ender_pearl', 'potion', 'strenghtstick', 'healstick', 'hangglider', 
         'paladium_bow', 'potion_launcher', 'cave_block', 'slime_green', 'stickofgod', 
         'armure_paladium', 'paladium_sword', 'paladium_green_sword', 'icons',
-        'outils', 'pillage'
+        'outils', 'pillage', 'particles'
     ]; // Séquence de textures
     const resolutions = ['8x8', '16x16', '32x32', '64x64', '128x128', '256x256'];
     let currentTextureIndex = 0;
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let armurePaladiumIndex = 1;
     let outilsIndex = 1;
     let pillageIndex = 1;
+    let particlesIndex = 1;
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        if (textureType === 'outils' || textureType === 'pillage') {
+        if (textureType === 'outils' || textureType === 'pillage' || textureType === 'particles') {
             let i = 1;
             while (true) {
                 const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
@@ -328,6 +329,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             const filePath = `assets/palamod/textures/blocks/pillage/effects/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         }
+                    }
+                } else if (textureType === 'particles') {
+                    const folderPath = `textures/${resolution}/particles/`;
+                    let i = 1;
+                    while (true) {
+                        const file = `particles${i}.png`;
+                        const fileUrl = `${folderPath}${file}`;
+                        if (!(await imageExists(fileUrl))) break;
+                        const fileBlob = await fetchImage(fileUrl);
+                        if (fileBlob) {
+                            const filePath = `assets/minecraft/textures/particle/${file.toUpperCase()}`;
+                            zip.file(filePath, fileBlob, { binary: true });
+                        }
+                        i++;
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
