@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let armurePaladiumIndex = 1;
     let outilsIndex = 1;
     let pillageIndex = 1;
-    let particlesIndex = 1;
 
     // Étape 1 : Sélectionner une résolution
     e1.forEach(option => {
@@ -49,13 +48,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Fonction pour créer un conteneur d'icône zoomée
-    function createZoomedIconContainer(src) {
+    function createZoomedIconContainer(src, isParticles = false) {
         const container = document.createElement('div');
         container.classList.add('zoomed-icon-container');
 
         const img = document.createElement('img');
         img.src = src;
         img.classList.add('zoomed-icon');
+
+        if (isParticles) {
+            img.style.transform = 'scale(9)';
+            img.style.transformOrigin = 'left top';
+            img.style.left = '-20px';
+            img.style.top = '-10px';
+        } else {
+            img.style.transform = 'scale(9)';
+            img.style.transformOrigin = 'top left';
+        }
 
         container.appendChild(img);
         return container;
@@ -76,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         imageGallery.innerHTML = ''; // Réinitialiser la galerie
         let selectedTexture = null; // Réinitialiser la sélection pour cet élément
 
-        if (textureType === 'outils' || textureType === 'pillage' || textureType === 'particles') {
+        if (textureType === 'outils' || textureType === 'pillage') {
             let i = 1;
             while (true) {
                 const imgSrc = `textures/${resolution}/${textureType}/image${i}.png`;
@@ -125,8 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 let imageContainer;
 
-                if (textureType === 'icons') {
-                    imageContainer = createZoomedIconContainer(imgSrc);
+                if (textureType === 'icons' || textureType === 'particles') {
+                    imageContainer = createZoomedIconContainer(imgSrc, textureType === 'particles');
                 } else {
                     imageContainer = document.createElement('div');
                     imageContainer.classList.add('image-container');
@@ -284,8 +293,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (textureType === 'icons') {
                     filePath = `assets/minecraft/textures/gui/icons.png`;
                     zip.file(filePath, imageBlob, { binary: true });
-                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword'].includes(textureType)) {
-                    filePath = `assets/palamod/textures/items/${textureType}.png`;
+                } else if (['strenghtstick', 'healstick', 'hangglider', 'stickofgod', 'paladium_sword', 'paladium_green_sword', 'particles'].includes(textureType)) {
+                    filePath = `assets/minecraft/textures/particle/${textureType}.png`;
                     zip.file(filePath, imageBlob, { binary: true });
                 } else if (textureType === 'cave_block') {
                     filePath = `assets/palamod/textures/blocks/caveblock/${textureType}.png`;
@@ -329,20 +338,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             const filePath = `assets/palamod/textures/blocks/pillage/effects/${file}`;
                             zip.file(filePath, fileBlob, { binary: true });
                         }
-                    }
-                } else if (textureType === 'particles') {
-                    const folderPath = `textures/${resolution}/particles/`;
-                    let i = 1;
-                    while (true) {
-                        const file = `particles${i}.png`;
-                        const fileUrl = `${folderPath}${file}`;
-                        if (!(await imageExists(fileUrl))) break;
-                        const fileBlob = await fetchImage(fileUrl);
-                        if (fileBlob) {
-                            const filePath = `assets/minecraft/textures/particle/${file.toUpperCase()}`;
-                            zip.file(filePath, fileBlob, { binary: true });
-                        }
-                        i++;
                     }
                 } else {
                     filePath = `assets/minecraft/textures/items/${textureType}.png`;
